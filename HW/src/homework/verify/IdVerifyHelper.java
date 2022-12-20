@@ -4,9 +4,17 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class IdVerifyHelper {
 
-    //讀取檔案
+    /**
+     * 讀取檔案
+     *
+     * @param filePath 檔案路徑
+     * @return List
+     */
     public static List readFile(String filePath) {
         ArrayList myList = null;
 
@@ -21,19 +29,21 @@ public class IdVerifyHelper {
                 myList.add(lineTxt);
             }
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("沒找到檔案");
         }
+
         return myList;
     }
 
     //身分驗證器
     public static void verify(String idStr) {
-
         try {
             int data[] = {10, 11, 12, 13, 14, 15, 16, 17, 34, 18, 19, 20, 21, 22, 35, 23, 24, 25, 26, 27, 28, 29, 32, 30, 31, 33};
             int val = data[idStr.charAt(0) - 'A']; //利用charAt取得idStr的第一個字母，與A相減取得相應的index
             int p = (val / 10) + (9 * (val % 10)); //p為放加權後相加結果的變數，先計算第一個字母的值
             int j = 1;
+
             // 用一個for迴圈去計算字母之後8個位數的加權
             for (int i = 8; i >= 1; i--) {
                 System.out.println("j =" + j);
@@ -65,4 +75,5 @@ public class IdVerifyHelper {
             verify(idStr);
         }
     }
+
 }
