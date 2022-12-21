@@ -7,7 +7,8 @@ import java.util.List;
 public class IdVerifyHelper {
 
     /**
-     *讀取檔案
+     * 讀取檔案
+     *
      * @param filePath
      * @return myList
      */
@@ -30,7 +31,8 @@ public class IdVerifyHelper {
     }
 
     /**
-     *計算並且驗證
+     * 計算並且驗證
+     *
      * @param idStr
      */
     public static void verify(String idStr) {
@@ -64,7 +66,7 @@ public class IdVerifyHelper {
         String filePath = "./HW/src/homework/verify/idList.txt";
         List<String> list = readFile(filePath);
 
-        for (String idStr: list) {
+        for (String idStr : list) {
             verify(idStr);
         }
     }
