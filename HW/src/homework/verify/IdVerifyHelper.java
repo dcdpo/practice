@@ -6,17 +6,17 @@ import java.util.List;
 
 public class IdVerifyHelper {
 
+    public static String path;
+
     /**
      * 讀取檔案
-     *
-     * @param filePath
      * @return myList
      */
-    public static List<String> readFile(String filePath) {
+    public static List<String> readFile(String filename) {
         List<String> myList = new ArrayList();
 
         try {
-            BufferedReader inFile = new BufferedReader(new FileReader(filePath));//用BufferedReader去做檔案的讀取
+            BufferedReader inFile = new BufferedReader(new FileReader("./HW/src/homework/verify/" + filename));//用BufferedReader去做檔案的讀取
             String lineTxt;
 
             while ((lineTxt = inFile.readLine()) != null) {
@@ -32,11 +32,12 @@ public class IdVerifyHelper {
 
     /**
      * 計算並且驗證
-     *
      * @param idStr
+     * @return
      */
-    public static void verify(String idStr) {
-
+    public static VerifyResult verify(String idStr) {
+        VerifyResult verifyResult = new VerifyResult();
+        verifyResult.setId(idStr);
         try {
             int data[] = {10, 11, 12, 13, 14, 15, 16, 17, 34, 18, 19, 20, 21, 22, 35, 23, 24, 25, 26, 27, 28, 29, 32, 30, 31, 33};
             int val = data[idStr.charAt(0) - 'A']; //利用charAt取得idStr的第一個字母，與A相減取得相應的index
@@ -50,24 +51,30 @@ public class IdVerifyHelper {
 
             int checkCode = (10 - (total % 10)) % 10;//取得驗證碼
             if (String.valueOf(idStr.charAt(9)).equals(String.valueOf(checkCode))) {
-                System.out.println("====您輸入的身分證字號" + idStr + "====");
-                System.out.println("====驗證成功====");
+                verifyResult.setVerifySuccess(true);
+                verifyResult.setMessage("驗證成功");
             } else {
-                System.out.println("====您輸入的身分證字號" + idStr + "====");
-                System.out.println("====驗證失敗====");
+                verifyResult.setVerifySuccess(false);
+                verifyResult.setMessage("驗證失敗");
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("====您輸入的身分證字號" + idStr + "====");
-            System.out.println("====驗證失敗====");
+            verifyResult.setVerifySuccess(false);
+            verifyResult.setMessage("驗證失敗");
         }
+        return verifyResult;
     }
 
-    public static void main(String[] args) {
-        String filePath = "./HW/src/homework/verify/idList.txt";
-        List<String> list = readFile(filePath);
+    public IdVerifyHelper(String filename){
+        this.path = "./HW/src/homework/verify/"+ filename;
+    }
+
+    public static List<VerifyResult> validate(String filename){
+        List<VerifyResult> resultsList = new ArrayList<>();
+        List<String> list = readFile(filename);
 
         for (String idStr : list) {
-            verify(idStr);
+            resultsList.add(verify(idStr));
         }
+        return resultsList;
     }
 }
