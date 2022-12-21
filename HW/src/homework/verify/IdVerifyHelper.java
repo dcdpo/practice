@@ -11,12 +11,12 @@ public class IdVerifyHelper {
      * @param filePath
      * @return myList
      */
-    public static List readFile(String filePath) {
-        ArrayList myList = new ArrayList();
+    public static List<String> readFile(String filePath) {
+        List<String> myList = new ArrayList();
 
         try {
             BufferedReader inFile = new BufferedReader(new FileReader(filePath));//用BufferedReader去做檔案的讀取
-            String lineTxt = null;
+            String lineTxt;
 
             while ((lineTxt = inFile.readLine()) != null) {
                 //inFile.readLine()是指讀取txt檔的每一行資料,把讀到的資料存到lineTxt
@@ -45,8 +45,8 @@ public class IdVerifyHelper {
                 total += i * Integer.parseInt(idStr.substring(count, count + 1));
                 count++;
             }
-            int checkCode = (10 - (total % 10)) % 10;//取得驗證碼
 
+            int checkCode = (10 - (total % 10)) % 10;//取得驗證碼
             if (String.valueOf(idStr.charAt(9)).equals(String.valueOf(checkCode))) {
                 System.out.println("====您輸入的身分證字號" + idStr + "====");
                 System.out.println("====驗證成功====");
@@ -62,10 +62,10 @@ public class IdVerifyHelper {
 
     public static void main(String[] args) {
         String filePath = "./HW/src/homework/verify/idList.txt";
-        List list = readFile(filePath);
+        List<String> list = readFile(filePath);
 
-        for (Object idStr: list) {
-            verify(String.valueOf(idStr));
+        for (String idStr: list) {
+            verify(idStr);
         }
     }
 }
