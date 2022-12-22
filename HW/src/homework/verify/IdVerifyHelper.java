@@ -8,6 +8,10 @@ public class IdVerifyHelper {
 
     public static String path;
 
+    public IdVerifyHelper(String filename){
+        this.path = "./HW/src/homework/verify/"+ filename;
+    }
+
     /**
      * 讀取檔案
      * @return myList
@@ -62,10 +66,6 @@ public class IdVerifyHelper {
             verifyResult.setMessage("驗證失敗");
         }
         return verifyResult;
-    }
-
-    public IdVerifyHelper(String filename){
-        this.path = "./HW/src/homework/verify/"+ filename;
     }
 
     public static List<VerifyResult> validate(String filename){

@@ -1,6 +1,6 @@
 package homework.verify;
 
-public class TestIdVelidate {
+public class TestIdValidate {
 
     public static void main(String[] args) {
         IdVerifyHelper idVerifyHelper = new IdVerifyHelper("");
