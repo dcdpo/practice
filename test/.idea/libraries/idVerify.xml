@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="idVerify">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../out/artifacts/practice_jar/idVerify.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
