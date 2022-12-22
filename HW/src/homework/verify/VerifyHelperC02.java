@@ -1,40 +1,30 @@
 package homework.verify;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IdVerifyHelper {
-
-    public static String path;
-
-    public IdVerifyHelper(String filename) {
-        this.path = "./HW/src/homework/verify/" + filename;
+public class VerifyHelperC02 extends IdVerifyHelper {
+    public VerifyHelperC02(String filename) {
+        super(filename);
     }
 
-    /**
-     * 讀取檔案
-     *
-     * @return myList
-     */
-    public static List<String> readFile(String filename) {
-        List<String> myList = new ArrayList();
+//    public VerifyResult verifyFormat2(String idStr) {
+//        VerifyResult verifyResult = new VerifyResult();
+//        verifyResult.setId(idStr);
+//
+//        for (int i = 0; i <= idStr.length(); i++) {
+////            int chr = idStr.charAt(i);
+//        if (idStr.matches("[a-zA-Z0-9]*")) {
+//            verifyResult.setVerifySuccess(false);
+//            verifyResult.setMessage("證號格式錯誤*");
+//        } else {
+//            validate(idStr);
+//        }
+//        }
+//        return verifyResult;
+//    }
 
-        try {
-            BufferedReader inFile = new BufferedReader(new FileReader(filename));//用BufferedReader去做檔案的讀取
-            String lineTxt;
-
-            while ((lineTxt = inFile.readLine()) != null) {
-                //inFile.readLine()是指讀取txt檔的每一行資料,把讀到的資料存到lineTxt
-                //再將lineTxt按照順序一行一行的儲存到myList
-                myList.add(lineTxt);
-            }
-        } catch (IOException e) {
-            System.out.println("沒找到檔案");
-        }
-        return myList;
-    }
-
+    @Override
     public List<VerifyResult> validate(String filename) {
         List<VerifyResult> resultsList = new ArrayList<>();
         List<String> list = readFile(filename);
@@ -55,7 +45,10 @@ public class IdVerifyHelper {
                 }
 
                 int checkCode = (10 - (total % 10)) % 10;//取得驗證碼
-                if (String.valueOf(idStr.charAt(9)).equals(String.valueOf(checkCode))) {
+                if (idStr.matches("[a-zA-Z0-9]")) {
+                    verifyResult.setVerifySuccess(false);
+                    verifyResult.setMessage("證號格式錯誤*");
+                } else if (String.valueOf(idStr.charAt(9)).equals(String.valueOf(checkCode))) {
                     verifyResult.setVerifySuccess(true);
                     verifyResult.setMessage("驗證成功");
                 } else {
