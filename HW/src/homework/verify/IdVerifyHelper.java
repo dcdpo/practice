@@ -16,7 +16,7 @@ public class IdVerifyHelper {
         List<String> myList = new ArrayList();
 
         try {
-            BufferedReader inFile = new BufferedReader(new FileReader("./HW/src/homework/verify/" + filename));//用BufferedReader去做檔案的讀取
+            BufferedReader inFile = new BufferedReader(new FileReader(filename));//用BufferedReader去做檔案的讀取
             String lineTxt;
 
             while ((lineTxt = inFile.readLine()) != null) {
