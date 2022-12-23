@@ -40,9 +40,9 @@ public class IdVerifyHelper {
         List<String> list = readFile(filename);
 
         for (String idStr : list) {
-
             VerifyResult verifyResult = new VerifyResult();
             verifyResult.setId(idStr);
+
             try {
                 int data[] = {10, 11, 12, 13, 14, 15, 16, 17, 34, 18, 19, 20, 21, 22, 35, 23, 24, 25, 26, 27, 28, 29, 32, 30, 31, 33};
                 int val = data[idStr.charAt(0) - 'A']; //利用charAt取得idStr的第一個字母，與A相減取得相應的index
