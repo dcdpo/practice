@@ -1,4 +1,4 @@
-package Controller;
+package com.example.demo.Controller;
 
 public class Member {
     String id;

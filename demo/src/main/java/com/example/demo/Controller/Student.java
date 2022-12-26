@@ -1,6 +1,4 @@
-package Controller;
-
-import Controller.Member;
+package com.example.demo.Controller;
 
 public class Student extends Member {
     String classes;
