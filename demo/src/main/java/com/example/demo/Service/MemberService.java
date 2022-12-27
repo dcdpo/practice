@@ -5,6 +5,7 @@ import com.example.demo.Controller.Member;
 import java.util.List;
 
 public class MemberService {
+
     public List<Member> getAllMember(){
         return null;
     }
@@ -24,4 +25,5 @@ public class MemberService {
     public Member getStudent(String studentId){
         return null;
     }
+
 }
