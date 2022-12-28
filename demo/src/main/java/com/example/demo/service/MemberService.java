@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
 public class MemberService {
+
     @Autowired
     private MemberRepository memberRepository;
 
@@ -30,7 +30,7 @@ public class MemberService {
     }
 
     public List<Member> getAllStudent(){
-        String subject = "subject is null";
+        String subject = "數學";
         Member member = memberRepository.findBySubject(subject);
         List<Member> memberList = new ArrayList<>();
         memberList.add(member);
