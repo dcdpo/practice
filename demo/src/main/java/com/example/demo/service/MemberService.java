@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.controller.Member;
+import com.example.demo.entity.Member;
 //import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,7 @@ public class MemberService {
 
         return memberList;
     }
+
     public List<Member> getAllStudent(){
         String subject = "subject is null";
         Member member = memberRepository.findBySubject(subject);
@@ -47,5 +48,4 @@ public class MemberService {
     public Member getStudent(String studentId){
         return null;
     }
-
 }
