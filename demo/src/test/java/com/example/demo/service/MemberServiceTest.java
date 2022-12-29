@@ -11,35 +11,30 @@ import java.util.List;
 public class MemberServiceTest {
 
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberService memberService;
 
     @Test
     public void getMembers() {
-        List<Member> memberList = memberRepository.findAll();
-        System.out.println(memberList);
+        System.out.println(memberService.getAllMember());
     }
 
     @Test
     public void getAllTeacher() {
-        List<Member> member = memberRepository.findByJobTitleIsNotNull();
-        System.out.println(member);
+        System.out.println(memberService.getAllTeacher());
     }
 
     @Test
     public void getAllStudent() {
-        List<Member> member = memberRepository.findBySubject();
-        System.out.println(member);
+        System.out.println(memberService.getAllStudent());
     }
 
     @Test
     public void getTeacherById() {
-        Member member = memberRepository.findByTeacherId("1");
-        System.out.println(member);
+        System.out.println(memberService.getTeacher("1"));
     }
 
     @Test
     public void getStudentById() {
-        Member member = memberRepository.findByStudentId("3");
-        System.out.println(member);
+        System.out.println(memberService.getStudent("3"));
     }
 }
