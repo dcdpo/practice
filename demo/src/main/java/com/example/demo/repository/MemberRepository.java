@@ -15,8 +15,8 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     List<Member> findBySubject();
 
     @Query(value = "select * from MEMBER m where m.subject IS NOT NULL and m.member_id = :id", nativeQuery = true)
-    Member findByTeacherId(@Param("id") String id);
+    Member findTeacherByMemberId(@Param("id") String id);
 
     @Query(value = "select * from MEMBER m where m.subject IS NULL and m.member_id = :id", nativeQuery = true)
-    Member findByStudentId(@Param("id") String id);
+    Member findStudentByMemberId(@Param("id") String id);
 }

@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,12 +15,16 @@ public class Member {
     String name;
     @Column(name="GENDER")
     String gender;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(name="SUBJECT")
     String subject;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(name="JOB_TITLE")
     String jobTitle;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(name="CLASS")
     String classes;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(name="ADMISSION_YEAR_MONTH")
     String admissionYearMonth;
 
@@ -76,5 +82,19 @@ public class Member {
 
     public void setAdmissionYearMonth(String admissionYearMonth) {
         this.admissionYearMonth = admissionYearMonth;
+    }
+
+    @Override
+    public String toString() {
+
+        return "{" +
+                (id == null ? "" : "id=" + id) +
+                (name == null ? "" : " ,name=" + name) +
+                (gender == null ? "" : " ,gender=" + gender) +
+                (subject == null ? "" : " ,subject=" + subject) +
+                (jobTitle == null ? "" : " ,jobTitle=" + jobTitle) +
+                (classes == null ? "" : " ,classes=" + classes) +
+                (admissionYearMonth == null ? "" : " ,admissionYearMonth=" + admissionYearMonth) +
+                "}";
     }
 }

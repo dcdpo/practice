@@ -31,13 +31,13 @@ public class MemberService {
     }
 
     public Member getTeacher(String id) {
-        Member member = memberRepository.findByTeacherId(id);
+        Member member = memberRepository.findTeacherByMemberId(id);
 
         return member;
     }
 
     public Member getStudent(String id) {
-        Member member = memberRepository.findByStudentId(id);
+        Member member = memberRepository.findStudentByMemberId(id);
 
         return member;
     }
