@@ -19,13 +19,13 @@ public class MemberService {
     }
 
     public List<Member> getAllTeacher() {
-        List<Member> member = memberRepository.findByJobTitleIsNotNull();
+        List<Member> member = memberRepository.findTeacherBySubject();
 
         return member;
     }
 
     public List<Member> getAllStudent() {
-        List<Member> member = memberRepository.findBySubject();
+        List<Member> member = memberRepository.findStudentBySubjectIsNull();
 
         return member;
     }

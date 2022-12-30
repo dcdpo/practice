@@ -9,10 +9,10 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member, String> {
 
     @Query(value = "select * from MEMBER m where m.subject IS NOT NULL", nativeQuery = true)
-    List<Member> findByJobTitleIsNotNull();
+    List<Member> findTeacherBySubject();
 
     @Query(value = "select * from MEMBER m where m.subject IS NULL ", nativeQuery = true)
-    List<Member> findBySubject();
+    List<Member> findStudentBySubjectIsNull();
 
     @Query(value = "select * from MEMBER m where m.subject IS NOT NULL and m.member_id = :id", nativeQuery = true)
     Member findTeacherByMemberId(@Param("id") String id);
