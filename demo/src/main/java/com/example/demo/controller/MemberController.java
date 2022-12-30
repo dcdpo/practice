@@ -20,21 +20,33 @@ public class MemberController {
     public ResponseEntity<List<Member>> getMembers() {
         List<Member> memberList = memberService.getAllMember();
 
-        return ResponseEntity.status(HttpStatus.OK).body(memberList);
+        if (memberList != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(memberList);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @GetMapping("/rest/all-teacher")
     public ResponseEntity<List<Member>> getAllTeacher() {
         List<Member> memberList = memberService.getAllTeacher();
 
-        return ResponseEntity.status(HttpStatus.OK).body(memberList);
+        if (memberList != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(memberList);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @GetMapping("/rest/all-student")
     public ResponseEntity<List<Member>> getAllStudent() {
         List<Member> memberList = memberService.getAllStudent();
 
-        return ResponseEntity.status(HttpStatus.OK).body(memberList);
+        if (memberList != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(memberList);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @GetMapping("/rest/teacher")
