@@ -16,37 +16,37 @@ public class MemberService {
     private MemberRepository memberRepository;
 
     public List<Member> getAllMember() {
-        List<Teacher> teacher = memberRepository.findTeacherBySubject();
-        List<Student> student = memberRepository.findStudentBySubjectIsNull();
+        List<Teacher> teacherList = memberRepository.findTeacherBySubject();
+        List<Student> studentList = memberRepository.findStudentBySubjectIsNull();
         List<Member> memberList = new ArrayList<>();
 
-        for (int i = 0 ; i <= teacher.size()-1; i++){
-            memberList.add(teacher.get(i));
+        for (Teacher teacher : teacherList){
+            memberList.add(teacher);
         }
-        for (int j = 0 ; j <= student.size()-1; j++){
-            memberList.add(student.get(j));
+        for (Student student : studentList){
+            memberList.add(student);
         }
 
         return memberList;
     }
 
     public List<Member> getAllTeacher() {
-        List<Teacher> teacher = memberRepository.findTeacherBySubject();
+        List<Teacher> teacherList = memberRepository.findTeacherBySubject();
         List<Member> memberList = new ArrayList<>();
 
-        for (int i = 0 ; i <= teacher.size()-1; i++){
-            memberList.add(teacher.get(i));
+        for (Teacher teacher : teacherList){
+            memberList.add(teacher);
         }
 
         return memberList;
     }
 
     public List<Member> getAllStudent() {
-        List<Student> student = memberRepository.findStudentBySubjectIsNull();
+        List<Student> studentList = memberRepository.findStudentBySubjectIsNull();
         List<Member> memberList = new ArrayList<>();
 
-        for (int i = 0 ; i <= student.size()-1; i++){
-            memberList.add(student.get(i));
+        for (Student student : studentList){
+            memberList.add(student);
         }
 
         return memberList;

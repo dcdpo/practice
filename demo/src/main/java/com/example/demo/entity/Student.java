@@ -36,6 +36,7 @@ public class Student extends Member {
                 (gender == null ? "" : " ,gender=" + gender) +
                 (classes == null ? "" : " ,classes=" + classes) +
                 (admissionYearMonth == null ? "" : " ,admissionYearMonth=" + admissionYearMonth) +
-                "}";
+                "}"+
+                ("\n");
     }
 }

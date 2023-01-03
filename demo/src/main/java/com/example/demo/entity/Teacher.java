@@ -36,6 +36,7 @@ public class Teacher extends Member {
                 (gender == null ? "" : " ,gender=" + gender) +
                 (subject == null ? "" : " ,subject=" + subject) +
                 (jobTitle == null ? "" : " ,jobTitle=" + jobTitle) +
-                "}";
+                "}"+
+                ("\n");
     }
 }
