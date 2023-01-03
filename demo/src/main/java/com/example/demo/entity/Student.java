@@ -7,9 +7,9 @@ import javax.persistence.Entity;
 public class Student extends Member {
 
     @Column(name = "CLASS")
-    String classes;
+    private String classes;
     @Column(name = "ADMISSION_YEAR_MONTH")
-    String admissionYearMonth;
+    private String admissionYearMonth;
 
     public String getClasses() {
         return classes;
@@ -31,9 +31,9 @@ public class Student extends Member {
     public String toString() {
 
         return "{" +
-                (id == null ? "" : "id=" + id) +
-                (name == null ? "" : " ,name=" + name) +
-                (gender == null ? "" : " ,gender=" + gender) +
+//                (id == null ? "" : "id=" + id) +
+//                (name == null ? "" : " ,name=" + name) +
+//                (gender == null ? "" : " ,gender=" + gender) +
                 (classes == null ? "" : " ,classes=" + classes) +
                 (admissionYearMonth == null ? "" : " ,admissionYearMonth=" + admissionYearMonth) +
                 "}"+

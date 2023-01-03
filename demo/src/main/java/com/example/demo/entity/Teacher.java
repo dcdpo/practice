@@ -31,9 +31,9 @@ public class Teacher extends Member {
     public String toString() {
 
         return "{" +
-                (id == null ? "" : "id=" + id) +
-                (name == null ? "" : " ,name=" + name) +
-                (gender == null ? "" : " ,gender=" + gender) +
+//                (id == null ? "" : "id=" + id) +
+//                (name == null ? "" : " ,name=" + name) +
+//                (gender == null ? "" : " ,gender=" + gender) +
                 (subject == null ? "" : " ,subject=" + subject) +
                 (jobTitle == null ? "" : " ,jobTitle=" + jobTitle) +
                 "}"+

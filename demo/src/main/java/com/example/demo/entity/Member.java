@@ -9,12 +9,19 @@ public class Member {
 
     @Id
     @Column(name = "MEMBER_ID")
-    String id;
+    private String id;
     @Column(name = "MEMBER_NAME")
-    String name;
+    private String name;
     @Column(name = "GENDER")
-    String gender;
-
+    private String gender;
+    @Column(name = "SUBJECT")
+    private String subject;
+    @Column(name = "JOB_TITLE")
+    private String jobTitle;
+    @Column(name = "CLASS")
+    private String classes;
+    @Column(name = "ADMISSION_YEAR_MONTH")
+    private String admissionYearMonth;
     public String getId() {
         return id;
     }
@@ -37,5 +44,37 @@ public class Member {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public String getClasses() {
+        return classes;
+    }
+
+    public void setClasses(String classes) {
+        this.classes = classes;
+    }
+
+    public String getAdmissionYearMonth() {
+        return admissionYearMonth;
+    }
+
+    public void setAdmissionYearMonth(String admissionYearMonth) {
+        this.admissionYearMonth = admissionYearMonth;
     }
 }

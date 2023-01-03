@@ -16,51 +16,38 @@ public class MemberService {
     private MemberRepository memberRepository;
 
     public List<Member> getAllMember() {
-        List<Teacher> teacherList = memberRepository.findTeacherBySubject();
-        List<Student> studentList = memberRepository.findStudentBySubjectIsNull();
-        List<Member> memberList = new ArrayList<>();
-
-        for (Teacher teacher : teacherList){
-            memberList.add(teacher);
-        }
-        for (Student student : studentList){
-            memberList.add(student);
-        }
+        List<Member> memberList = memberRepository.findAll();
 
         return memberList;
     }
 
     public List<Member> getAllTeacher() {
-        List<Teacher> teacherList = memberRepository.findTeacherBySubject();
-        List<Member> memberList = new ArrayList<>();
-
-        for (Teacher teacher : teacherList){
-            memberList.add(teacher);
-        }
+        List<Member> memberList = memberRepository.findTeacherBySubject();
 
         return memberList;
     }
 
     public List<Member> getAllStudent() {
-        List<Student> studentList = memberRepository.findStudentBySubjectIsNull();
-        List<Member> memberList = new ArrayList<>();
-
-        for (Student student : studentList){
-            memberList.add(student);
-        }
+        List<Member> memberList = memberRepository.findStudentBySubjectIsNull();
 
         return memberList;
     }
 
     public Member getTeacher(String id) {
-        Teacher member = memberRepository.findTeacherByMemberId(id);
+        Member member = memberRepository.findTeacherByMemberId(id);
 
         return member;
     }
 
     public Member getStudent(String id) {
-        Student member = memberRepository.findStudentByMemberId(id);
+        Member member = memberRepository.findStudentByMemberId(id);
 
         return member;
+    }
+
+    public Member createTeacher(Teacher teacher){
+        Member memeber = memberRepository.save(teacher);
+
+        return memeber;
     }
 }

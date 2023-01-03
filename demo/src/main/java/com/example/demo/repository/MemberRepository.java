@@ -12,14 +12,14 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member, String> {
 
     @Query(value = "select * from MEMBER m where m.subject IS NOT NULL", nativeQuery = true)
-    List<Teacher> findTeacherBySubject();
+    List<Member> findTeacherBySubject();
 
     @Query(value = "select * from MEMBER m where m.subject IS NULL ", nativeQuery = true)
-    List<Student> findStudentBySubjectIsNull();
+    List<Member> findStudentBySubjectIsNull();
 
     @Query(value = "select * from MEMBER m where m.subject IS NOT NULL and m.member_id = :id", nativeQuery = true)
-    Teacher findTeacherByMemberId(@Param("id") String id);
+    Member findTeacherByMemberId(@Param("id") String id);
 
     @Query(value = "select * from MEMBER m where m.subject IS NULL and m.member_id = :id", nativeQuery = true)
-    Student findStudentByMemberId(@Param("id") String id);
+    Member findStudentByMemberId(@Param("id") String id);
 }
