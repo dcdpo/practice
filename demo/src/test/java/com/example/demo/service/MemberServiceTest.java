@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,11 +28,32 @@ public class MemberServiceTest {
 
     @Test
     public void getTeacherById() {
-        System.out.println(memberService.getTeacher("1"));
+        System.out.println(memberService.getTeacher(1));
     }
 
     @Test
     public void getStudentById() {
-        System.out.println(memberService.getStudent("3"));
+        System.out.println(memberService.getStudent(10));
+    }
+
+    @Test
+    public void createMember() {
+        Member member = new Member();
+        member.setId("10");
+        memberService.createMember(member);
+    }
+
+    @Test
+    public void updateMember() {
+        Member member = new Member();
+        member.setName("哭阿");
+        int id = 10;
+
+//        memberService.updateMember(member, member);
+    }
+
+    @Test
+    public void deleteProduct() {
+        memberService.deleteMemberById(10);
     }
 }

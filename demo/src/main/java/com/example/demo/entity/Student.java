@@ -1,14 +1,8 @@
 package com.example.demo.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-
-@Entity
 public class Student extends Member {
 
-    @Column(name = "CLASS")
     private String classes;
-    @Column(name = "ADMISSION_YEAR_MONTH")
     private String admissionYearMonth;
 
     public String getClasses() {
@@ -31,12 +25,12 @@ public class Student extends Member {
     public String toString() {
 
         return "{" +
-//                (id == null ? "" : "id=" + id) +
-//                (name == null ? "" : " ,name=" + name) +
-//                (gender == null ? "" : " ,gender=" + gender) +
+                (super.getId() == null ? "" : "id=" + super.getId()) +
+                (super.getName() == null ? "" : " ,name=" + super.getName()) +
+                (super.getGender() == null ? "" : " ,gender=" + super.getGender()) +
                 (classes == null ? "" : " ,classes=" + classes) +
                 (admissionYearMonth == null ? "" : " ,admissionYearMonth=" + admissionYearMonth) +
-                "}"+
+                "}" +
                 ("\n");
     }
 }
