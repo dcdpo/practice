@@ -3,8 +3,10 @@ package com.example.demo.service;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -53,19 +55,26 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public void updateMember(Member member, Member memberData) {
+    public void updateMember(Integer id, Member member) {
+        memberRepository.findById(String.valueOf(id)).ifPresentOrElse((memberData) -> {
+            memberData.setName(member.getName());
+            memberData.setGender(member.getGender());
+            memberData.setSubject(member.getSubject());
+            memberData.setJobTitle(member.getJobTitle());
+            memberData.setClasses(member.getClasses());
+            memberData.setAdmissionYearMonth(member.getAdmissionYearMonth());
 
-        memberData.setName(member.getName());
-        memberData.setGender(member.getGender());
-        memberData.setSubject(member.getSubject());
-        memberData.setJobTitle(member.getJobTitle());
-        memberData.setClasses(member.getClasses());
-        memberData.setAdmissionYearMonth(member.getAdmissionYearMonth());
-
-        memberRepository.save(memberData);
+            memberRepository.save(memberData);
+        }, () -> {
+            throw new EntityNotFoundException();
+        });
     }
 
     public void deleteMemberById(Integer id) {
-        memberRepository.deleteById(String.valueOf(id));
+        memberRepository.findById(String.valueOf(id)).ifPresentOrElse((member) -> {
+            memberRepository.delete(member);
+        }, () -> {
+            throw new EmptyResultDataAccessException(id);
+        });
     }
 }

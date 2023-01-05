@@ -1,15 +1,21 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Member;
+import com.example.demo.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.EmptyResultDataAccessException;
+
+import javax.persistence.EntityNotFoundException;
 
 @SpringBootTest
 public class MemberServiceTest {
 
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private MemberRepository memberRepository;
 
     @Test
     public void getMembers() {
@@ -41,6 +47,7 @@ public class MemberServiceTest {
         Member member = new Member();
         member.setId("10");
         memberService.createMember(member);
+        System.out.println(memberRepository.findById("10"));
     }
 
     @Test
@@ -48,12 +55,21 @@ public class MemberServiceTest {
         Member member = new Member();
         member.setName("哭阿");
         int id = 10;
-
-//        memberService.updateMember(member, member);
+        try {
+            memberService.updateMember(id, member);
+            System.out.println(memberRepository.findById("10"));
+        } catch (EntityNotFoundException e) {
+            System.out.println("沒有資料");
+        }
     }
 
     @Test
-    public void deleteProduct() {
-        memberService.deleteMemberById(10);
+    public void deleteMember() {
+        try {
+            memberService.deleteMemberById(10);
+            System.out.println(memberRepository.findById("10"));
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("沒有資料");
+        }
     }
 }

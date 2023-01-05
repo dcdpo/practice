@@ -4,10 +4,12 @@ import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -87,38 +89,27 @@ public class MemberController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateMember(@PathVariable Integer id,
-                                          @RequestBody Member member) {
+    public ResponseEntity<?> updateMember(@PathVariable Integer id, @RequestBody Member member) {
 
-        Member memberData = memberRepository.findById(String.valueOf(id)).orElse(null);
-        //檢查有沒有這筆資料
-        if (memberData == null) {
+        try {
+            memberService.updateMember(id, member);
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().header("沒有這筆資料").build();
         }
-        //修改這筆資料
-        memberService.updateMember(member, memberData);
+
         //檢查是否更新成功
         Member updateDate = memberRepository.findById(String.valueOf(id)).orElse(null);
 
-        if (updateDate != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(memberData);
-        }
-        return ResponseEntity.accepted().body("資料沒更新成功");
+        return ResponseEntity.status(HttpStatus.OK).body(updateDate);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteMember(@PathVariable Integer id) {
-        Member member = memberRepository.findById(String.valueOf(id)).orElse(null);
-
-        if (member == null) {
-            ResponseEntity.noContent().header("沒有符合的資料").build();
-        }
 
         try {
             memberService.deleteMemberById(id);
-        } catch (Exception e) {
+        } catch (EmptyResultDataAccessException e) {
             return ResponseEntity.ok().header("發生異常").build();
-
         }
         return ResponseEntity.ok().header("刪除成功").build();
     }
