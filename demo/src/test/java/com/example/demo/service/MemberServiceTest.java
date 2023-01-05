@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Member;
+import com.example.demo.entity.Message;
 import com.example.demo.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +46,12 @@ public class MemberServiceTest {
     @Test
     public void createMember() {
         Member member = new Member();
-        member.setId("11");
+        member.setId("4");
         try {
             memberService.createMember(member);
             System.out.println(memberRepository.findById("11"));
         } catch (EntityExistsException e) {
-            System.out.println("Id 重複了!!");
+            System.out.println(Message.createFail());
         }
     }
 
@@ -63,7 +64,7 @@ public class MemberServiceTest {
             memberService.updateMember(id, member);
             System.out.println(memberRepository.findById("10"));
         } catch (EntityNotFoundException e) {
-            System.out.println("沒有資料");
+            System.out.println(Message.updateFail());
         }
     }
 
@@ -73,7 +74,7 @@ public class MemberServiceTest {
             memberService.deleteMemberById(10);
             System.out.println(memberRepository.findById("10"));
         } catch (EntityNotFoundException e) {
-            System.out.println("沒有資料");
+            System.out.println(Message.deleteFail());
         }
     }
 }

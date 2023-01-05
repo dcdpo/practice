@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Member;
+import com.example.demo.entity.Message;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,9 +89,9 @@ public class MemberController {
         try {
             memberService.createMember(member);
 
-            return ResponseEntity.ok().body("新增成功");
+            return ResponseEntity.ok().body(Message.createSuccess());
         } catch (EntityExistsException e) {
-            return ResponseEntity.ok().body("Id重複");
+            return ResponseEntity.ok().body(Message.createFail());
         }
     }
 
@@ -100,7 +101,7 @@ public class MemberController {
         try {
             memberService.updateMember(id, member);
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().header("沒有這筆資料").build();
+            return ResponseEntity.ok().body(Message.updateFail());
         }
 
         //檢查是否更新成功
@@ -110,13 +111,13 @@ public class MemberController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteMember(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteMember(@PathVariable Integer id) {
 
         try {
             memberService.deleteMemberById(id);
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.ok().header("發生異常").build();
+            return ResponseEntity.ok().body(Message.deleteFail());
         }
-        return ResponseEntity.ok().header("刪除成功").build();
+        return ResponseEntity.ok().body(Message.deleteSuccess());
     }
 }
