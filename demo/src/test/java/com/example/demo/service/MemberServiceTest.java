@@ -5,8 +5,8 @@ import com.example.demo.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.EmptyResultDataAccessException;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
 @SpringBootTest
@@ -45,9 +45,13 @@ public class MemberServiceTest {
     @Test
     public void createMember() {
         Member member = new Member();
-        member.setId("10");
-        memberService.createMember(member);
-        System.out.println(memberRepository.findById("10"));
+        member.setId("11");
+        try {
+            memberService.createMember(member);
+            System.out.println(memberRepository.findById("11"));
+        } catch (EntityExistsException e) {
+            System.out.println("Id 重複了!!");
+        }
     }
 
     @Test
@@ -68,7 +72,7 @@ public class MemberServiceTest {
         try {
             memberService.deleteMemberById(10);
             System.out.println(memberRepository.findById("10"));
-        } catch (EmptyResultDataAccessException e) {
+        } catch (EntityNotFoundException e) {
             System.out.println("沒有資料");
         }
     }

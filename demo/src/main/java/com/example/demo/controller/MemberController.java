@@ -4,11 +4,12 @@ import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
@@ -38,7 +39,7 @@ public class MemberController {
         List<Member> memberList = memberService.getAllTeacher();
         String message = memberService.noContent();
 
-        if (memberList.size() > 0) {
+        if (!CollectionUtils.isEmpty(memberList)) {
             return ResponseEntity.status(HttpStatus.OK).body(memberList);
         } else {
             return ResponseEntity.ok().body(message);
@@ -83,9 +84,14 @@ public class MemberController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createMember(@RequestBody @Valid Member member) {
-        memberService.createMember(member);
 
-        return ResponseEntity.ok().body("新增成功");
+        try {
+            memberService.createMember(member);
+
+            return ResponseEntity.ok().body("新增成功");
+        } catch (EntityExistsException e) {
+            return ResponseEntity.ok().body("Id重複");
+        }
     }
 
     @PutMapping("/update/{id}")
@@ -108,7 +114,7 @@ public class MemberController {
 
         try {
             memberService.deleteMemberById(id);
-        } catch (EmptyResultDataAccessException e) {
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.ok().header("發生異常").build();
         }
         return ResponseEntity.ok().header("刪除成功").build();

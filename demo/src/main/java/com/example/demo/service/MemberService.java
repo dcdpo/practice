@@ -3,9 +3,9 @@ package com.example.demo.service;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
@@ -52,7 +52,10 @@ public class MemberService {
     }
 
     public void createMember(Member member) {
-        memberRepository.save(member);
+        String id = member.getId();
+        memberRepository.findById(id).ifPresentOrElse((memberData) -> {
+            throw new EntityExistsException();
+        }, () -> memberRepository.save(member));
     }
 
     public void updateMember(Integer id, Member member) {
@@ -74,7 +77,7 @@ public class MemberService {
         memberRepository.findById(String.valueOf(id)).ifPresentOrElse((member) -> {
             memberRepository.delete(member);
         }, () -> {
-            throw new EmptyResultDataAccessException(id);
+            throw new EntityNotFoundException();
         });
     }
 }
