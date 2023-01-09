@@ -40,6 +40,7 @@
   <button
       type="button"
       class="btn btn-primary"
+      @click="myFunction()"
   >
     查詢
   </button>
@@ -47,51 +48,33 @@
   <table style="margin-left: auto;margin-right: auto;">
     <thead>
     <tr>
-      <th class="white-space-nowrap">
-        學號
-      </th>
-      <th class="white-space-nowrap">
-        姓名
-      </th>
-      <th class="white-space-nowrap">
-        性別
-      </th>
-      <th class="white-space-nowrap">
-        科目
-      </th>
-      <th class="white-space-nowrap">
-        職位
-      </th>
-      <th class="white-space-nowrap">
-        班級
-      </th>
-      <th class="white-space-nowrap">
-        入學年度
+      <th v-for="header in headers" :key="header.text">
+        {{header.text}}
       </th>
     </tr>
     </thead>
     <tbody>
-    <tr>
+    <tr v-for="member in searchForm.memberList" :key="member.id">
       <td>
-        1
+        {{member.id}}
       </td>
       <td>
-        jacky
+        {{member.name}}
       </td>
       <td>
-        男
+        {{member.gender}}
       </td>
       <td>
-        無
+        {{member.subject}}
       </td>
       <td>
-        無
+        {{member.jobTitle}}
       </td>
       <td>
-        301
+        {{member.class}}
       </td>
       <td>
-        201910
+        {{member.admissionYearMonth}}
       </td>
     </tr>
     </tbody>
@@ -99,48 +82,31 @@
 
 </template>
 
-<script>
-// var app = new Vue({
-//   el: '#app',
-//   data: {
-//     members: [
-//       {
-//         id: 1,
-//         name: 'Billy',
-//         gender: 'male',
-//         subject: '數學',
-//         jobTitle: '教務主任'
-//       },
-//       {
-//         id: 2,
-//         name: 'Heidi',
-//         gender: 'female',
-//         subject: '英文',
-//         jobTitle: '教師'
-//       },
-//       {
-//         id: 3,
-//         name: 'Jacky',
-//         gender: 'male',
-//         class: 301,
-//         admissionYearMonth: 201910
-//       },
-//       {
-//         id: 4,
-//         name: 'Lawrence',
-//         gender: 'male',
-//         class: 801,
-//         admissionYearMonth: 201812
-//       }
-//     ],
-//     search:'',
-//   }
-// })
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
+<script setup>
+import {reactive} from "vue";
+
+const headers = [
+  { text: "學號"},
+  { text: "姓名"},
+  { text: "性別"},
+  { text: "科目"},
+  { text: "職位"},
+  { text: "班級"},
+  { text: "入學年度"},
+];
+
+const searchForm = reactive({
+    memberList: [
+      {id: 1, name: 'Billy', gender: 'male', subject: '數學', jobTitle: '教務主任'},
+      {id: 2, name: 'Heidi', gender: 'female', subject: '英文', jobTitle: '教師'},
+      {id: 3, name: 'Jacky', gender: 'male', class: 301, admissionYearMonth: 201910},
+      {id: 4, name: 'Lawrence', gender: 'male', class: 801, admissionYearMonth: 201812}
+    ]
+})
+
+function myFunction() {
+  let data = document.getElementById('input01').value;
+  console.log("data = ",data)
 }
 </script>
 
