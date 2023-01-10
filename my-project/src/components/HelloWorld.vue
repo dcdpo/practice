@@ -40,74 +40,97 @@
   <button
       type="button"
       class="btn btn-primary"
-      @click="myFunction()"
+      @click="getMemberById()"
   >
     查詢
   </button>
   <br><br><br><br><br>
+  <div v-if="testList.length > 0">
   <table style="margin-left: auto;margin-right: auto;">
     <thead>
     <tr>
-      <th v-for="header in headers" :key="header.text">
-        {{header.text}}
+       <th v-for="header in searchForm.headers" :key="header.text">
+         {{ header.text }}
       </th>
     </tr>
     </thead>
     <tbody>
-    <tr v-for="member in searchForm.memberList" :key="member.id">
-      <td>
-        {{member.id}}
-      </td>
-      <td>
-        {{member.name}}
-      </td>
-      <td>
-        {{member.gender}}
-      </td>
-      <td>
-        {{member.subject}}
-      </td>
-      <td>
-        {{member.jobTitle}}
-      </td>
-      <td>
-        {{member.class}}
-      </td>
-      <td>
-        {{member.admissionYearMonth}}
-      </td>
-    </tr>
+      <tr v-for="(member, key) in testList" :key="key">
+        <td>
+          {{ member.id }}
+        </td>
+        <td>
+          {{ member.name }}
+        </td>
+        <td>
+          {{ member.gender }}
+        </td>
+        <td v-if="member.subject != null">
+          {{ member.subject }}
+        </td>
+        <td v-else>
+          無
+        </td>
+        <td v-if="member.jobTitle != null">
+          {{ member.jobTitle }}
+        </td>
+        <td v-else>
+          無
+        </td>
+        <td v-if="member.class != null">
+          {{ member.class }}
+        </td>
+        <td v-else>
+          無
+        </td>
+        <td v-if="member.admissionYearMonth != null">
+          {{ member.admissionYearMonth }}
+        </td>
+        <td v-else>
+          無
+        </td>
+      </tr>
     </tbody>
   </table>
-
+  </div>
 </template>
 
 <script setup>
-import {reactive} from "vue";
 
-const headers = [
-  { text: "學號"},
-  { text: "姓名"},
-  { text: "性別"},
-  { text: "科目"},
-  { text: "職位"},
-  { text: "班級"},
-  { text: "入學年度"},
-];
+import {reactive, ref} from "vue";
 
 const searchForm = reactive({
-    memberList: [
-      {id: 1, name: 'Billy', gender: 'male', subject: '數學', jobTitle: '教務主任'},
-      {id: 2, name: 'Heidi', gender: 'female', subject: '英文', jobTitle: '教師'},
-      {id: 3, name: 'Jacky', gender: 'male', class: 301, admissionYearMonth: 201910},
-      {id: 4, name: 'Lawrence', gender: 'male', class: 801, admissionYearMonth: 201812}
-    ]
+  headers: [
+    {text: "學號"},
+    {text: "姓名"},
+    {text: "性別"},
+    {text: "科目"},
+    {text: "職位"},
+    {text: "班級"},
+    {text: "入學年度"},
+  ],
+
+  memberList: [
+    {id: 1, name: 'Billy', gender: 'male', subject: '數學', jobTitle: '教務主任'},
+    {id: 2, name: 'Heidi', gender: 'female', subject: '英文', jobTitle: '教師'},
+    {id: 3, name: 'Jacky', gender: 'male', class: 301, admissionYearMonth: 201910},
+    {id: 4, name: 'Lawrence', gender: 'male', class: 801, admissionYearMonth: 201812}
+  ]
 })
 
-function myFunction() {
+let testList = ref([]);
+
+function getMemberById() {
   let data = document.getElementById('input01').value;
-  console.log("data = ",data)
+  if (data > 0) {
+    testList.value.push(searchForm.memberList[data - 1]);
+  }else{
+    let i;
+    for ( i = 0; i < searchForm.memberList.length; i++)
+      testList.value.push(searchForm.memberList[i]);
+  }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
