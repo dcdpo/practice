@@ -34,69 +34,70 @@
   <button
       type="button"
       class="btn btn-primary"
+      @click="cleanData"
   >
     清除
   </button>
   <button
       type="button"
       class="btn btn-primary"
-      @click="getMemberById()"
+      @click="getMemberById"
   >
     查詢
   </button>
   <br><br><br><br><br>
-  <div v-if="testList.length > 0">
-  <table style="margin-left: auto;margin-right: auto;">
-    <thead>
-    <tr>
-       <th v-for="header in searchForm.headers" :key="header.text">
-         {{ header.text }}
-      </th>
-    </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(member, key) in testList" :key="key">
-        <td>
-          {{ member.id }}
-        </td>
-        <td>
-          {{ member.name }}
-        </td>
-        <td>
-          {{ member.gender }}
-        </td>
-        <td v-if="member.subject != null">
-          {{ member.subject }}
-        </td>
-        <td v-else>
-          無
-        </td>
-        <td v-if="member.jobTitle != null">
-          {{ member.jobTitle }}
-        </td>
-        <td v-else>
-          無
-        </td>
-        <td v-if="member.class != null">
-          {{ member.class }}
-        </td>
-        <td v-else>
-          無
-        </td>
-        <td v-if="member.admissionYearMonth != null">
-          {{ member.admissionYearMonth }}
-        </td>
-        <td v-else>
-          無
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
+    <div v-if="testList.length > 0">
+      <table style="margin-left: auto;margin-right: auto;">
+        <thead>
+        <tr>
+          <th v-for="header in searchForm.headers" :key="header.text">
+            {{ header.text }}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(member, key) in testList" :key="key">
+          <td>
+            {{ member.id }}
+          </td>
+          <td>
+            {{ member.name }}
+          </td>
+          <td>
+            {{ member.gender }}
+          </td>
+          <td v-if="member.subject != null">
+            {{ member.subject }}
+          </td>
+          <td v-else>
+            無
+          </td>
+          <td v-if="member.jobTitle != null">
+            {{ member.jobTitle }}
+          </td>
+          <td v-else>
+            無
+          </td>
+          <td v-if="member.class != null">
+            {{ member.class }}
+          </td>
+          <td v-else>
+            無
+          </td>
+          <td v-if="member.admissionYearMonth != null">
+            {{ member.admissionYearMonth }}
+          </td>
+          <td v-else>
+            無
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div v-else></div>
 </template>
 
 <script setup>
-
 import {reactive, ref} from "vue";
 
 const searchForm = reactive({
@@ -117,20 +118,23 @@ const searchForm = reactive({
     {id: 4, name: 'Lawrence', gender: 'male', class: 801, admissionYearMonth: 201812}
   ]
 })
-
 let testList = ref([]);
 
 function getMemberById() {
   let data = document.getElementById('input01').value;
+
   if (data > 0) {
     testList.value.push(searchForm.memberList[data - 1]);
-  }else{
-    let i;
-    for ( i = 0; i < searchForm.memberList.length; i++)
+  } else {
+    for (let i = 0; i < searchForm.memberList.length; i++)
       testList.value.push(searchForm.memberList[i]);
   }
+
 }
 
+function cleanData() {
+  testList.value.length = 0;
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
