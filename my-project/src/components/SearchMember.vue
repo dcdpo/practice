@@ -5,6 +5,7 @@
       學號
     </label>
     <input
+        v-model="searchForm.blank"
         id="input01"
         class="form-control"
         type="text"
@@ -18,8 +19,9 @@
     <select
         class="form-select"
         aria-label="select"
+        v-model="searchForm.genre"
     >
-      <option selected>
+      <option selected value="">
         無
       </option>
       <option value="teacher">
@@ -32,16 +34,16 @@
   </div>
   <br>
   <button
-      type="button"
+      type="reset"
       class="btn btn-primary"
-      @click="cleanData"
+      @click="cleanData()"
   >
     清除
   </button>
   <button
-      type="button"
+      type="reset"
       class="btn btn-primary"
-      @click="getMemberById"
+      @click="getDataBySearch"
   >
     查詢
   </button>
@@ -90,6 +92,13 @@
           <td v-else>
             無
           </td>
+          <button
+              type="button"
+              class="btn btn-primary"
+              @click="deleteData(member.id)"
+          >
+            清除
+          </button>
         </tr>
         </tbody>
       </table>
@@ -101,6 +110,8 @@
 import {reactive, ref} from "vue";
 
 const searchForm = reactive({
+  blank: '',
+  genre: '',
   headers: [
     {text: "學號"},
     {text: "姓名"},
@@ -110,7 +121,6 @@ const searchForm = reactive({
     {text: "班級"},
     {text: "入學年度"},
   ],
-
   memberList: [
     {id: 1, name: 'Billy', gender: 'male', subject: '數學', jobTitle: '教務主任'},
     {id: 2, name: 'Heidi', gender: 'female', subject: '英文', jobTitle: '教師'},
@@ -120,20 +130,32 @@ const searchForm = reactive({
 })
 let testList = ref([]);
 
-function getMemberById() {
-  let data = document.getElementById('input01').value;
+function getDataBySearch() {
+  let data = searchForm.blank;
+  testList.value.length = 0;
 
   if (data > 0) {
     testList.value.push(searchForm.memberList[data - 1]);
-  } else {
-    for (let i = 0; i < searchForm.memberList.length; i++)
-      testList.value.push(searchForm.memberList[i]);
+  } else if (data == ''){
+    if (searchForm.genre == 'student') {
+      console.log(searchForm.genre);
+    }else if(searchForm.genre == 'teacher'){
+      console.log(searchForm.genre);
+    }else{
+      for (let i = 0; i < searchForm.memberList.length; i++)
+        testList.value.push(searchForm.memberList[i]);
+    }
   }
+}
 
+function deleteData(id){
+  console.log("id=", id)
 }
 
 function cleanData() {
+  searchForm.genre = '';
   testList.value.length = 0;
+  searchForm.blank = '';
 }
 </script>
 

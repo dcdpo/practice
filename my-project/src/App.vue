@@ -1,14 +1,14 @@
 <template>
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <SearchMember/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SearchMember from "@/components/SearchMember.vue";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    SearchMember,
   }
 }
 </script>
