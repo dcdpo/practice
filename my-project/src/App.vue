@@ -1,14 +1,14 @@
 <template>
-  <SearchMember/>
+  <CreateMember/>
 </template>
 
 <script>
-import SearchMember from "@/components/SearchMember.vue";
+import CreateMember from "@/components/CreateMember.vue";
 
 export default {
   name: 'App',
   components: {
-    SearchMember,
+    CreateMember,
   }
 }
 </script>
