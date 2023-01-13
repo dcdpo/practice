@@ -108,6 +108,7 @@
 
 <script setup>
 import {reactive, ref} from "vue";
+import axios from 'axios';
 
 const searchForm = reactive({
   blank: '',
@@ -122,31 +123,22 @@ const searchForm = reactive({
     {text: "入學年度"},
   ],
   memberList: [
-    {id: 1, name: 'Billy', gender: 'male', subject: '數學', jobTitle: '教務主任'},
-    {id: 2, name: 'Heidi', gender: 'female', subject: '英文', jobTitle: '教師'},
-    {id: 3, name: 'Jacky', gender: 'male', class: 301, admissionYearMonth: 201910},
-    {id: 4, name: 'Lawrence', gender: 'male', class: 801, admissionYearMonth: 201812}
   ]
 })
 let testList = ref([]);
 
 function getDataBySearch() {
-  let data = searchForm.blank;
+  // let data = searchForm.blank;
   testList.value.length = 0;
 
-  if (data > 0) {
-    testList.value.push(searchForm.memberList[data - 1]);
-  } else if (data == ''){
-    if (searchForm.genre == 'student') {
-      console.log(searchForm.genre);
-    }else if(searchForm.genre == 'teacher'){
-      console.log(searchForm.genre);
-    }else{
       for (let i = 0; i < searchForm.memberList.length; i++)
         testList.value.push(searchForm.memberList[i]);
-    }
-  }
 }
+axios
+    .get('http://localhost:8081/rest/all').then(({ data }) => {
+      searchForm.memberList = data;
+})
+
 
 function deleteData(id){
   console.log("id=", id)
