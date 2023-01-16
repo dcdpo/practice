@@ -48,7 +48,7 @@
     查詢
   </button>
   <br><br><br><br><br>
-  <div v-if="testList.length > 0">
+  <div v-if="memberList.length > 0">
     <table style="margin-left: auto;margin-right: auto;">
       <thead>
       <tr>
@@ -58,7 +58,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(member, key) in searchForm.memberList" :key="key">
+      <tr v-for="(member, key) in memberList" :key="key">
         <td>
           {{ member.id }}
         </td>
@@ -103,7 +103,8 @@
       </tbody>
     </table>
   </div>
-  <div v-else></div>
+  <div v-else-if="message.length > 0">{{message[0]}}
+  </div>
 </template>
 
 <script setup>
@@ -121,66 +122,79 @@ const searchForm = reactive({
     {text: "職位"},
     {text: "班級"},
     {text: "入學年度"},
-  ],
-  memberList: []
+  ]
 })
-let testList = ref([]);
+let memberList = ref([]);
+let message = ref([]);
 
 function getDataBySearch() {
-  let data = searchForm.blank;
-  testList.value.length = 0;
+  let blank = searchForm.blank;
+  memberList.value.length = 0;
 
-  if (data > 0) {
-    console.log("data > 0")
-    testList.value.push(searchForm.memberList[data - 1]);
-  } else if (data == ''){
-    console.log("data == ''")
+  if (blank > 0) {
     if (searchForm.genre == 'student') {
-      console.log("student")
+      console.log()
       axios
-          .get('http://localhost:8081/rest/all-student').then(({ data }) => {
-        searchForm.memberList = data;
-        console.log(testList)
-        for (let i = 0; i < searchForm.memberList.length; i++)
-          testList.value.push(searchForm.memberList[i]);
+          .get('http://localhost:8081/rest/student?id=' + blank).then(({data}) => {
+        if (typeof data != "string") {
+          memberList.value.push(data);
+        } else {
+          message.value.push(data);
+        }
       })
-    }else if(searchForm.genre == 'teacher'){
-      console.log("teacher")
+    } else if (searchForm.genre == 'teacher') {
       axios
-          .get('http://localhost:8081/rest/all-teacher').then(({ data }) => {
-        searchForm.memberList = data;
+          .get('http://localhost:8081/rest/teacher?id=' + blank).then(({data}) => {
+        if (typeof data != "string") {
+          memberList.value.push(data);
+        } else {
+          message.value.push(data);
+        }
       })
-      console.log(testList)
-      for (let i = 0; i < searchForm.memberList.length; i++)
-        testList.value.push(searchForm.memberList[i]);
-    }else{
-      console.log("else")
+    } else {
       axios
-          .get('http://localhost:8081/rest/all').then(({ data }) => {
-        searchForm.memberList = data;
+          .get('http://localhost:8081/rest/all').then(({data}) => {
+        memberList.value.push(data[blank - 1]);
       })
-      console.log(testList)
-      for (let i = 0; i < searchForm.memberList.length; i++)
-        testList.value.push(searchForm.memberList[i]);
+    }
+  } else if (blank == '') {
+    if (searchForm.genre == 'student') {
+      axios
+          .get('http://localhost:8081/rest/all-student').then(({data}) => {
+        for (let i = 0; i < data.length; i++)
+          memberList.value.push(data[i]);
+      })
+    } else if (searchForm.genre == 'teacher') {
+      axios
+          .get('http://localhost:8081/rest/all-teacher').then(({data}) => {
+        for (let i = 0; i < data.length; i++)
+          memberList.value.push(data[i]);
+      })
+    } else {
+      axios
+          .get('http://localhost:8081/rest/all').then(({data}) => {
+        for (let i = 0; i < data.length; i++)
+          memberList.value.push(data[i]);
+      })
     }
   }
 }
 
-function deleteData(id) {
-  window.confirm('確定要刪除嗎?')
-
-  if (confirm('確定要刪除嗎?') == true) {
-
-    window.alert("已刪除!");
-  } else {
-
-  }
-  console.log("id=", id)
-}
+// function deleteData(id) {
+//   window.confirm('確定要刪除嗎?')
+//
+//   if (confirm('確定要刪除嗎?') == true) {
+//
+//     window.alert("已刪除!");
+//   } else {
+//
+//   }
+//   console.log("id=", id)
+// }
 
 function cleanData() {
   searchForm.genre = '';
-  testList.value.length = 0;
+  memberList.value.length = 0;
   searchForm.blank = '';
 }
 </script>
