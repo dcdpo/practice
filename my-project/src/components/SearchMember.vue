@@ -48,66 +48,68 @@
     查詢
   </button>
   <br><br><br><br><br>
-    <div v-if="testList.length > 0">
-      <table style="margin-left: auto;margin-right: auto;">
-        <thead>
-        <tr>
-          <th v-for="header in searchForm.headers" :key="header.text">
-            {{ header.text }}
-          </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(member, key) in testList" :key="key">
-          <td>
-            {{ member.id }}
-          </td>
-          <td>
-            {{ member.name }}
-          </td>
-          <td>
-            {{ member.gender }}
-          </td>
-          <td v-if="member.subject != null">
-            {{ member.subject }}
-          </td>
-          <td v-else>
-            無
-          </td>
-          <td v-if="member.jobTitle != null">
-            {{ member.jobTitle }}
-          </td>
-          <td v-else>
-            無
-          </td>
-          <td v-if="member.class != null">
-            {{ member.class }}
-          </td>
-          <td v-else>
-            無
-          </td>
-          <td v-if="member.admissionYearMonth != null">
-            {{ member.admissionYearMonth }}
-          </td>
-          <td v-else>
-            無
-          </td>
-          <button
-              type="button"
-              class="btn btn-primary"
-              @click="deleteData(member.id)"
-          >
-            清除
-          </button>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div v-else></div>
+  <div v-if="memberList.length > 0">
+    <table style="margin-left: auto;margin-right: auto;">
+      <thead>
+      <tr>
+        <th v-for="header in searchForm.headers" :key="header.text">
+          {{ header.text }}
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="(member, key) in memberList" :key="key">
+        <td>
+          {{ member.id }}
+        </td>
+        <td>
+          {{ member.name }}
+        </td>
+        <td>
+          {{ member.gender }}
+        </td>
+        <td v-if="member.subject != null">
+          {{ member.subject }}
+        </td>
+        <td v-else>
+          無
+        </td>
+        <td v-if="member.jobTitle != null">
+          {{ member.jobTitle }}
+        </td>
+        <td v-else>
+          無
+        </td>
+        <td v-if="member.class != null">
+          {{ member.class }}
+        </td>
+        <td v-else>
+          無
+        </td>
+        <td v-if="member.admissionYearMonth != null">
+          {{ member.admissionYearMonth }}
+        </td>
+        <td v-else>
+          無
+        </td>
+        <button
+            type="button"
+            class="btn btn-primary"
+            @click="deleteData(member.id)"
+        >
+          清除
+        </button>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div v-else-if="message.length > 0">{{message[0]}}
+  </div>
 </template>
 
 <script setup>
 import {reactive, ref} from "vue";
+import axios from 'axios';
 
 const searchForm = reactive({
   blank: '',
@@ -120,41 +122,79 @@ const searchForm = reactive({
     {text: "職位"},
     {text: "班級"},
     {text: "入學年度"},
-  ],
-  memberList: [
-    {id: 1, name: 'Billy', gender: 'male', subject: '數學', jobTitle: '教務主任'},
-    {id: 2, name: 'Heidi', gender: 'female', subject: '英文', jobTitle: '教師'},
-    {id: 3, name: 'Jacky', gender: 'male', class: 301, admissionYearMonth: 201910},
-    {id: 4, name: 'Lawrence', gender: 'male', class: 801, admissionYearMonth: 201812}
   ]
 })
-let testList = ref([]);
+let memberList = ref([]);
+let message = ref([]);
 
 function getDataBySearch() {
-  let data = searchForm.blank;
-  testList.value.length = 0;
+  let blank = searchForm.blank;
+  memberList.value.length = 0;
 
-  if (data > 0) {
-    testList.value.push(searchForm.memberList[data - 1]);
-  } else if (data == ''){
+  if (blank > 0) {
     if (searchForm.genre == 'student') {
-      console.log(searchForm.genre);
-    }else if(searchForm.genre == 'teacher'){
-      console.log(searchForm.genre);
-    }else{
-      for (let i = 0; i < searchForm.memberList.length; i++)
-        testList.value.push(searchForm.memberList[i]);
+      console.log()
+      axios
+          .get('http://localhost:8081/rest/student?id=' + blank).then(({data}) => {
+        if (typeof data != "string") {
+          memberList.value.push(data);
+        } else {
+          message.value.push(data);
+        }
+      })
+    } else if (searchForm.genre == 'teacher') {
+      axios
+          .get('http://localhost:8081/rest/teacher?id=' + blank).then(({data}) => {
+        if (typeof data != "string") {
+          memberList.value.push(data);
+        } else {
+          message.value.push(data);
+        }
+      })
+    } else {
+      axios
+          .get('http://localhost:8081/rest/all').then(({data}) => {
+        memberList.value.push(data[blank - 1]);
+      })
+    }
+  } else if (blank == '') {
+    if (searchForm.genre == 'student') {
+      axios
+          .get('http://localhost:8081/rest/all-student').then(({data}) => {
+        for (let i = 0; i < data.length; i++)
+          memberList.value.push(data[i]);
+      })
+    } else if (searchForm.genre == 'teacher') {
+      axios
+          .get('http://localhost:8081/rest/all-teacher').then(({data}) => {
+        for (let i = 0; i < data.length; i++)
+          memberList.value.push(data[i]);
+      })
+    } else {
+      axios
+          .get('http://localhost:8081/rest/all').then(({data}) => {
+        for (let i = 0; i < data.length; i++)
+          memberList.value.push(data[i]);
+      })
     }
   }
 }
 
-function deleteData(id){
-  console.log("id=", id)
-}
+// function deleteData(id) {
+//   window.confirm('確定要刪除嗎?')
+//
+//   if (confirm('確定要刪除嗎?') == true) {
+//
+//     window.alert("已刪除!");
+//   } else {
+//
+//   }
+//   console.log("id=", id)
+// }
 
 function cleanData() {
   searchForm.genre = '';
-  testList.value.length = 0;
+  memberList.value.length = 0;
   searchForm.blank = '';
 }
 </script>
