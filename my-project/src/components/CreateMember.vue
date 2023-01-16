@@ -127,7 +127,9 @@
 </template>
 
 <script setup>
-import {reactive, ref} from "vue";
+import {reactive} from "vue";
+import axios from 'axios';
+import response from "core-js/internals/is-forced";
 
 const createForm = reactive({
   identity: '',
@@ -140,7 +142,6 @@ const createForm = reactive({
   input06: '',
   input07: '',
 })
-let dataList = ref([]);
 
 function createData(){
     let id = String(createForm.input01);
@@ -158,17 +159,25 @@ function createData(){
       window.alert("職業要選!!")
       return;
     }
-    else if(id != null) {
-      dataList.value.length = 0;
-      dataList.value.push(id);
-      dataList.value.push(name);
-      dataList.value.push(gender);
-      dataList.value.push(subject);
-      dataList.value.push(jobTitle);
-      dataList.value.push(classes);
-      dataList.value.push(admissionYearMonth);
+    else if(id != null && createForm.identity != null) {
+        axios
+            .post('http://localhost:8081/create',
+                {
+                  "id": id,
+                  "name": name,
+                  "gender": gender,
+                  "subject": subject,
+                  "jobTitle": jobTitle,
+                  "classes": classes,
+                  "admissionYearMonth": admissionYearMonth
+                }
+                )
+            .then(function (response) {
+              window.alert(response.data);
+            })
+    }else {
+      window.alert(response.data);
     }
-    console.log(dataList);
   }
 
 function cleanData() {
