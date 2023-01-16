@@ -111,6 +111,7 @@ public class MemberController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin
     public ResponseEntity<?> deleteMember(@PathVariable Integer id) {
 
         try {
