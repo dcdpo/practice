@@ -103,7 +103,7 @@
       </tbody>
     </table>
   </div>
-  <div v-else-if="message.length > 0">{{message[0]}}
+  <div v-else-if="message.length > 0">{{ message[0] }}
   </div>
 </template>
 
@@ -180,17 +180,17 @@ function getDataBySearch() {
   }
 }
 
-// function deleteData(id) {
-//   window.confirm('確定要刪除嗎?')
-//
-//   if (confirm('確定要刪除嗎?') == true) {
-//
-//     window.alert("已刪除!");
-//   } else {
-//
-//   }
-//   console.log("id=", id)
-// }
+function deleteData(id) {
+  if (confirm('確定要刪除嗎?') == true) {
+    axios
+        .delete('http://localhost:8081/delete/'+id)
+        .then(function (response) {
+          window.alert(response.data);
+        })
+  } else {
+    return;
+  }
+}
 
 function cleanData() {
   searchForm.genre = '';
