@@ -128,8 +128,8 @@
 
 <script setup>
 import {reactive} from "vue";
-import axios from 'axios';
-import response from "core-js/internals/is-forced";
+// import axios from 'axios';
+// import response from "core-js/internals/is-forced";
 
 const createForm = reactive({
   identity: '',
@@ -144,41 +144,8 @@ const createForm = reactive({
 })
 
 function createData(){
-    let id = String(createForm.input01);
-    let name = String(createForm.input02);
-    let gender = String(createForm.input03);
-    let subject = String(createForm.input04);
-    let jobTitle = String(createForm.input05);
-    let classes = String(createForm.input06);
-    let admissionYearMonth = String(createForm.input07);
 
-    if(createForm.input01 == ''){
-      window.alert("id要填!!")
-      return;
-    } else if (createForm.identity == ''){
-      window.alert("職業要選!!")
-      return;
-    }
-    else if(id !== null && createForm.identity !== null) {
-        axios
-            .post('http://localhost:8081/create',
-                {
-                  "id": id,
-                  "name": name,
-                  "gender": gender,
-                  "subject": subject,
-                  "jobTitle": jobTitle,
-                  "classes": classes,
-                  "admissionYearMonth": admissionYearMonth
-                }
-                )
-            .then(function (response) {
-              window.alert(response.data);
-            })
-    }else {
-      window.alert(response.data);
-    }
-  }
+}
 
 function cleanData() {
   createForm.genre = '';

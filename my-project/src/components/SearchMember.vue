@@ -68,25 +68,25 @@
         <td>
           {{ member.gender }}
         </td>
-        <td v-if="member.subject != null">
+        <td v-if="member.subject !== null">
           {{ member.subject }}
         </td>
         <td v-else>
           無
         </td>
-        <td v-if="member.jobTitle != null">
+        <td v-if="member.jobTitle !== null">
           {{ member.jobTitle }}
         </td>
         <td v-else>
           無
         </td>
-        <td v-if="member.class != null">
+        <td v-if="member.class !== null">
           {{ member.class }}
         </td>
         <td v-else>
           無
         </td>
-        <td v-if="member.admissionYearMonth != null">
+        <td v-if="member.admissionYearMonth !== null">
           {{ member.admissionYearMonth }}
         </td>
         <td v-else>
@@ -99,6 +99,9 @@
         >
           清除
         </button>
+        <RouterLink to="/UpdateMember">
+          修改
+        </RouterLink>
       </tr>
       </tbody>
     </table>
@@ -110,6 +113,7 @@
 <script setup>
 import {reactive, ref} from "vue";
 import axios from 'axios';
+import {RouterLink} from "vue-router";
 
 const searchForm = reactive({
   blank: '',
