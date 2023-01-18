@@ -1,15 +1,19 @@
 <template>
-  <SearchMember/>
+  <SearchMember />
 </template>
 
 <script>
 // import CreateMember from "@/components/CreateMember.vue";
-import  SearchMember from "@/components/SearchMember.vue"
+import SearchMember from "@/components/SearchMember.vue";
+// import RouterView from "vue-router";
+// import UpdateMember from "@/components/UpdateMember.vue";
 
 export default {
   name: 'App',
   components: {
+    // CreateMember,
     SearchMember,
+    // UpdateMember,
   }
 }
 </script>
