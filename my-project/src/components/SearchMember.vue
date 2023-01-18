@@ -157,8 +157,12 @@ function getDataBySearch() {
       })
     } else {
       axios
-          .get('http://localhost:8081/rest/all').then(({data}) => {
-        memberList.value.push(data[blank - 1]);
+          .get('http://localhost:8081/rest/all/' + blank).then(({data}) => {
+        if (typeof data != "string") {
+          memberList.value.push(data);
+        } else {
+          message.value.push(data);
+        }
       })
     }
   } else if (blank == '') {
