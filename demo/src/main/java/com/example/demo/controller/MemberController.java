@@ -35,6 +35,18 @@ public class MemberController {
         }
     }
 
+    @GetMapping("rest/all/{id}")
+    public ResponseEntity<?> getById(@PathVariable String id) {
+        Member member = memberService.getById(Integer.valueOf(id));
+        String message = memberService.noContent();
+
+        if (member != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(member);
+        } else {
+            return ResponseEntity.ok().body(message);
+        }
+    }
+
     @GetMapping("/rest/all-teacher")
     public ResponseEntity<?> getAllTeacher() {
         List<Member> memberList = memberService.getAllTeacher();
