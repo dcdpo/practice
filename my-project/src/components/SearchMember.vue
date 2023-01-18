@@ -68,25 +68,26 @@
         <td>
           {{ member.gender }}
         </td>
-        <td v-if="member.subject !== null">
+        <td v-if="member.subject != null">
           {{ member.subject }}
         </td>
         <td v-else>
           無
         </td>
-        <td v-if="member.jobTitle !== null">
+        <td v-if="member.jobTitle != null">
           {{ member.jobTitle }}
         </td>
         <td v-else>
           無
         </td>
-        <td v-if="member.class !== null">
+        <td v-if="member.class != null">
+          有
           {{ member.class }}
         </td>
         <td v-else>
           無
         </td>
-        <td v-if="member.admissionYearMonth !== null">
+        <td v-if="member.admissionYearMonth != null">
           {{ member.admissionYearMonth }}
         </td>
         <td v-else>
@@ -99,14 +100,22 @@
         >
           清除
         </button>
-        <RouterLink to="/UpdateMember">
-          修改
+        <RouterLink :to="{name: 'UpdateMember',
+                          query: {id: member.id, name: member.name,
+                                  gender: member.gender, subject: member.subject,
+                                  jobTitle: member.jobTitle, class: member.class,
+                                  admissionYearMonth: member.admissionYearMonth}}"
+                    custom v-slot="{ navigate }">
+          <button @click="navigate" role="link">
+            修改
+          </button>
         </RouterLink>
       </tr>
       </tbody>
     </table>
   </div>
-  <div v-else-if="message.length > 0">{{ message[0] }}
+  <div v-else-if="message.length > 0">
+    {{ message[0] }}
   </div>
 </template>
 
@@ -114,6 +123,8 @@
 import {reactive, ref} from "vue";
 import axios from 'axios';
 import {RouterLink} from "vue-router";
+
+
 
 const searchForm = reactive({
   blank: '',

@@ -1,5 +1,5 @@
 <template>
-  <h1>新增功能</h1>
+  <h1>修改功能</h1>
   <div class="input-item">
     <label class="form-label" for="input01">
       <span style="color: red">*</span>
@@ -128,28 +128,80 @@
 
 <script setup>
 import {reactive} from "vue";
+import {useRoute} from "vue-router"
+import axios from "axios";
 // import axios from 'axios';
 // import response from "core-js/internals/is-forced";
 
+const route = useRoute();
+
 const createForm = reactive({
-  identity: '',
-  blank: '',
-  input01: '',
-  input02: '',
-  input03: '',
-  input04: '',
-  input05: '',
-  input06: '',
-  input07: '',
+  identity: genre(),
+  input01: route.query.id,
+  input02: route.query.name,
+  input03: route.query.gender,
+  input04: route.query.subject,
+  input05: route.query.jobTitle,
+  input06: route.query.class,
+  input07: route.query.admissionYearMonth,
 })
 
+function genre(){
+  if (route.query.subject != null){
+    return 'teacher';
+  }else if(route.query.subject == null){
+    return 'student';
+  }
+}
+
 function createData(){
+  let id = String(createForm.input01);
+  let name = String(createForm.input02);
+  let gender = String(createForm.input03);
+  let subject = String(createForm.input04);
+  let jobTitle = String(createForm.input05);
+  let classes = String(createForm.input06);
+  let admissionYearMonth = String(createForm.input07);
+
+  if (createForm.identity == 'teacher'){
+    axios
+        .put('http://localhost:8081/update/'+id,
+            {
+              "id": id,
+              "name": name,
+              "gender": gender,
+              "subject": subject,
+              "jobTitle": jobTitle,
+              "classes": null,
+              "admissionYearMonth": null
+            }
+        )
+        .then(function (response) {
+          console.log(response.data);
+        })
+
+  }else if(createForm.identity == 'student'){
+    axios
+        .put('http://localhost:8081/update/'+id,
+            {
+              "id": id,
+              "name": name,
+              "gender": gender,
+              "subject": null,
+              "jobTitle": null,
+              "classes": classes,
+              "admissionYearMonth": admissionYearMonth
+            }
+        )
+        .then(function (response) {
+          console.log(response.data);
+        })
+  }
 
 }
 
 function cleanData() {
   createForm.genre = '';
-  createForm.blank = '';
   createForm.identity = '';
   createForm.input01 = '';
   createForm.input02 = '';
