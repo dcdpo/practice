@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberService {
@@ -19,6 +20,14 @@ public class MemberService {
         String message = "查無資料";
 
         return message;
+    }
+
+    public Member getById(Integer id) {
+        Optional<Member> member = memberRepository.findById(String.valueOf(id));
+        if (member.isPresent()) {
+            return member.get();
+        }
+        return null;
     }
 
     public List<Member> getAllMember() {
