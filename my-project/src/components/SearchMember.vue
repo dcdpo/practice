@@ -1,5 +1,9 @@
 <template>
   <h1>查詢功能</h1>
+  <nav>
+    <RouterLink to="/">查詢功能</RouterLink>
+    <RouterLink to="/CreateMember">新增功能</RouterLink>
+  </nav>
   <div class="input-item">
     <label class="form-label" for="input01">
       學號
@@ -122,9 +126,9 @@
 <script setup>
 import {reactive, ref} from "vue";
 import axios from 'axios';
-import {RouterLink} from "vue-router";
+import {RouterLink, useRouter} from "vue-router";
 
-
+const router = useRouter();
 
 const searchForm = reactive({
   blank: '',
@@ -199,7 +203,8 @@ function getDataBySearch() {
   }
 }
 
-function deleteData(id) {
+function deleteData(id, member) {
+
   if (confirm('確定要刪除嗎?') == true) {
     axios
         .delete('http://localhost:8081/delete/'+id)
@@ -209,6 +214,7 @@ function deleteData(id) {
   } else {
     return;
   }
+  router.go(0)
 }
 
 function cleanData() {
@@ -222,6 +228,10 @@ function cleanData() {
 <style scoped>
 h3 {
   margin: 40px 0 0;
+}
+
+nav > a{
+  margin: 0 10px;
 }
 
 ul {
