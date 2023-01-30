@@ -66,36 +66,59 @@
         <td>
           {{ member.id }}
         </td>
-        <td>
+        <td v-if="member.name == null">
+          無
+        </td>
+        <td v-else-if="member.name == ''">
+          無
+        </td>
+        <td v-else>
           {{ member.name }}
         </td>
-        <td>
+        <td v-if="member.gender == null">
+          無
+        </td>
+        <td v-else-if="member.gender == ''">
+          無
+        </td>
+        <td v-else>
           {{ member.gender }}
         </td>
-        <td v-if="member.subject != null">
+        <td v-if="member.subject == null">
+          無
+        </td>
+        <td v-else-if="member.subject == ''">
+          無
+        </td>
+        <td v-else>
           {{ member.subject }}
         </td>
-        <td v-else>
+        <td v-if="member.jobTitle == null">
           無
         </td>
-        <td v-if="member.jobTitle != null">
+        <td v-else-if="member.jobTitle == ''">
+          無
+        </td>
+        <td v-else>
           {{ member.jobTitle }}
         </td>
-        <td v-else>
+        <td v-if="member.class == null">
           無
         </td>
-        <td v-if="member.class != null">
-          有
+        <td v-else-if="member.class == ''">
+          無
+        </td>
+        <td v-else>
           {{ member.class }}
         </td>
-        <td v-else>
+        <td v-if="member.admissionYearMonth == null">
           無
         </td>
-        <td v-if="member.admissionYearMonth != null">
+        <td v-else-if="member.admissionYearMonth == ''">
+          無
+        </td>
+        <td v-else>
           {{ member.admissionYearMonth }}
-        </td>
-        <td v-else>
-          無
         </td>
         <button
             type="button"
