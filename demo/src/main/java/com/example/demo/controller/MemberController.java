@@ -108,6 +108,7 @@ public class MemberController {
     }
 
     @PutMapping("/update/{id}")
+    @CrossOrigin
     public ResponseEntity<?> updateMember(@PathVariable Integer id, @RequestBody Member member) {
 
         try {
@@ -124,7 +125,7 @@ public class MemberController {
 
     @DeleteMapping("/delete/{id}")
     @CrossOrigin
-    public ResponseEntity<?> deleteMember(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteMember(@PathVariable String id) {
 
         try {
             memberService.deleteMemberById(id);

@@ -82,7 +82,7 @@ public class MemberService {
         });
     }
 
-    public void deleteMemberById(Integer id) {
+    public void deleteMemberById(String id) {
         memberRepository.findById(String.valueOf(id)).ifPresentOrElse((member) -> {
             memberRepository.delete(member);
         }, () -> {

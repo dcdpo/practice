@@ -46,7 +46,7 @@ public class MemberServiceTest {
     @Test
     public void createMember() {
         Member member = new Member();
-        member.setId("4");
+        member.setId("10");
         try {
             memberService.createMember(member);
             System.out.println(memberRepository.findById("11"));
@@ -71,7 +71,7 @@ public class MemberServiceTest {
     @Test
     public void deleteMember() {
         try {
-            memberService.deleteMemberById(10);
+            memberService.deleteMemberById("10");
             System.out.println(memberRepository.findById("10"));
         } catch (EntityNotFoundException e) {
             System.out.println(Message.deleteFail());
