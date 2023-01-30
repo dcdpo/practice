@@ -120,7 +120,11 @@ public class MemberController {
         //檢查是否更新成功
         Member updateDate = memberRepository.findById(String.valueOf(id)).orElse(null);
 
-        return ResponseEntity.status(HttpStatus.OK).body(updateDate);
+        if (updateDate != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(Message.updateSuccess());
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(Message.updateFailed());
+        }
     }
 
     @DeleteMapping("/delete/{id}")
