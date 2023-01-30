@@ -175,7 +175,6 @@ function getDataBySearch() {
 
   if (blank > 0) {
     if (searchForm.genre == 'student') {
-      console.log()
       axios
           .get('http://localhost:8081/rest/student?id=' + blank).then(({data}) => {
         if (typeof data != "string") {
@@ -226,7 +225,7 @@ function getDataBySearch() {
   }
 }
 
-function deleteData(id, member) {
+function deleteData(id) {
 
   if (confirm('確定要刪除嗎?') == true) {
     axios

@@ -145,15 +145,15 @@ const createForm = reactive({
   input07: route.query.admissionYearMonth,
 })
 
-function genre(){
-  if (route.query.subject != null){
+function genre() {
+  if (route.query.subject != null) {
     return 'teacher';
-  }else if(route.query.subject == null){
+  } else if (route.query.subject == null) {
     return 'student';
   }
 }
 
-function updateData(){
+function updateData() {
   let id = String(createForm.input01);
   let name = String(createForm.input02);
   let gender = String(createForm.input03);
@@ -162,9 +162,15 @@ function updateData(){
   let classes = String(createForm.input06);
   let admissionYearMonth = String(createForm.input07);
 
-  if (createForm.identity == 'teacher'){
+  if (createForm.input01 == '') {
+    window.alert("id要填!!")
+    return;
+  } else if (createForm.identity == '') {
+    window.alert("職業要選!!")
+    return;
+  } else if (createForm.identity == 'teacher') {
     axios
-        .put('http://localhost:8081/update/'+id,
+        .put('http://localhost:8081/update/' + id,
             {
               "id": id,
               "name": name,
@@ -176,12 +182,11 @@ function updateData(){
             }
         )
         .then(function (response) {
-          console.log(response.data);
+          window.alert(response.data);
         })
-
-  }else if(createForm.identity == 'student'){
+  } else if (createForm.identity == 'student') {
     axios
-        .put('http://localhost:8081/update/'+id,
+        .put('http://localhost:8081/update/' + id,
             {
               "id": id,
               "name": name,
@@ -193,7 +198,7 @@ function updateData(){
             }
         )
         .then(function (response) {
-          console.log(response.data);
+          window.alert(response.data);
         })
   }
 
@@ -205,7 +210,7 @@ h3 {
   margin: 40px 0 0;
 }
 
-nav > a{
+nav > a {
   margin: 0 10px;
 }
 
