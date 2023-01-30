@@ -1,5 +1,9 @@
 <template>
-  <h1>新增功能</h1>
+  <h1>修改功能</h1>
+  <nav>
+    <RouterLink to="/">查詢功能</RouterLink>
+    <RouterLink to="/CreateMember">新增功能</RouterLink>
+  </nav>
   <div class="input-item">
     <label class="form-label" for="input01">
       <span style="color: red">*</span>
@@ -110,53 +114,112 @@
     />
   </div>
   <br>
-  <button
-      type="button"
-      class="btn btn-primary"
-      @click="cleanData"
-  >
-    清除
-  </button>
-  <button
-      type="button"
-      class="btn btn-primary"
-      @click="createData"
-  >
-    新增
-  </button>
+  <RouterLink :to="{name: 'SearchMember'}"
+              custom v-slot="{ navigate }">
+    <button @click="navigate" role="link">
+      回上一頁
+    </button>
+  </RouterLink>
+  <RouterLink :to="{name: 'SearchMember'}">
+    <button @click="updateData">
+      儲存
+    </button>
+  </RouterLink>
 </template>
 
 <script setup>
 import {reactive} from "vue";
-// import axios from 'axios';
-// import response from "core-js/internals/is-forced";
+import {useRoute} from "vue-router"
+import axios from "axios";
+
+const route = useRoute();
 
 const createForm = reactive({
-  identity: '',
-  blank: '',
-  input01: '',
-  input02: '',
-  input03: '',
-  input04: '',
-  input05: '',
-  input06: '',
-  input07: '',
+  identity: genre(),
+  input01: route.query.id,
+  input02: route.query.name,
+  input03: route.query.gender,
+  input04: route.query.subject,
+  input05: route.query.jobTitle,
+  input06: route.query.class,
+  input07: route.query.admissionYearMonth,
 })
 
-function createData(){
-
+function genre(){
+  if (route.query.subject != null){
+    return 'teacher';
+  }else if(route.query.subject == null){
+    return 'student';
+  }
 }
 
-function cleanData() {
-  createForm.genre = '';
-  createForm.blank = '';
-  createForm.identity = '';
-  createForm.input01 = '';
-  createForm.input02 = '';
-  createForm.input03 = '';
-  createForm.input04 = '';
-  createForm.input05 = '';
-  createForm.input06 = '';
-  createForm.input07 = '';
+function updateData(){
+  let id = String(createForm.input01);
+  let name = String(createForm.input02);
+  let gender = String(createForm.input03);
+  let subject = String(createForm.input04);
+  let jobTitle = String(createForm.input05);
+  let classes = String(createForm.input06);
+  let admissionYearMonth = String(createForm.input07);
+
+  if (createForm.identity == 'teacher'){
+    axios
+        .put('http://localhost:8081/update/'+id,
+            {
+              "id": id,
+              "name": name,
+              "gender": gender,
+              "subject": subject,
+              "jobTitle": jobTitle,
+              "classes": null,
+              "admissionYearMonth": null
+            }
+        )
+        .then(function (response) {
+          console.log(response.data);
+        })
+
+  }else if(createForm.identity == 'student'){
+    axios
+        .put('http://localhost:8081/update/'+id,
+            {
+              "id": id,
+              "name": name,
+              "gender": gender,
+              "subject": null,
+              "jobTitle": null,
+              "classes": classes,
+              "admissionYearMonth": admissionYearMonth
+            }
+        )
+        .then(function (response) {
+          console.log(response.data);
+        })
+  }
+
 }
 </script>
+
+<style scoped>
+h3 {
+  margin: 40px 0 0;
+}
+
+nav > a{
+  margin: 0 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+a {
+  color: #42b983;
+}
+</style>

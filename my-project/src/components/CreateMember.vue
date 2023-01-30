@@ -1,5 +1,9 @@
 <template>
   <h1>新增功能</h1>
+  <nav>
+    <RouterLink to="/">查詢功能</RouterLink>
+    <RouterLink to="/CreateMember">新增功能</RouterLink>
+  </nav>
   <div class="input-item">
     <label class="form-label" for="input01">
       <span style="color: red">*</span>
@@ -118,18 +122,21 @@
     清除
   </button>
   <button
-      type="button"
-      class="btn btn-primary"
-      @click="createData"
+    type="button"
+    class="btn btn-primary"
+    @click="createData"
   >
-    新增
-  </button>
+      儲存
+    </button>
 </template>
 
 <script setup>
 import {reactive} from "vue";
 import axios from 'axios';
 import response from "core-js/internals/is-forced";
+import {useRouter} from "vue-router";
+
+const router = useRouter();
 
 const createForm = reactive({
   identity: '',
@@ -174,6 +181,9 @@ function createData(){
                 )
             .then(function (response) {
               window.alert(response.data);
+              if (response.data === "新增成功"){
+               router.push("/");
+                }
             })
     }else {
       window.alert(response.data);
@@ -193,3 +203,27 @@ function cleanData() {
   createForm.input07 = '';
 }
 </script>
+
+<style scoped>
+h3 {
+  margin: 40px 0 0;
+}
+
+nav > a{
+  margin: 0 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+a {
+  color: #42b983;
+}
+</style>
