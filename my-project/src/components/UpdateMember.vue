@@ -16,6 +16,7 @@
         name="text"
         required
         v-model="createForm.input01"
+        disabled
     />
     <br>
     <label class="form-label" for="input02">
