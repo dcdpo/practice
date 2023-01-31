@@ -16,6 +16,7 @@
         name="text"
         required
         v-model="createForm.input01"
+        disabled
     />
     <br>
     <label class="form-label" for="input02">
@@ -120,19 +121,22 @@
       回上一頁
     </button>
   </RouterLink>
-  <RouterLink :to="{name: 'SearchMember'}">
-    <button @click="updateData">
-      儲存
-    </button>
-  </RouterLink>
+  <button
+      type="button"
+      class="btn btn-primary"
+      @click="updateData"
+  >
+    儲存
+  </button>
 </template>
 
 <script setup>
 import {reactive} from "vue";
-import {useRoute} from "vue-router"
+import {useRoute, useRouter} from "vue-router"
 import axios from "axios";
 
 const route = useRoute();
+const router = useRouter();
 
 const createForm = reactive({
   identity: genre(),
@@ -141,19 +145,19 @@ const createForm = reactive({
   input03: route.query.gender,
   input04: route.query.subject,
   input05: route.query.jobTitle,
-  input06: route.query.class,
+  input06: route.query.classes,
   input07: route.query.admissionYearMonth,
 })
 
-function genre(){
-  if (route.query.subject != null){
+function genre() {
+  if (route.query.subject != null) {
     return 'teacher';
-  }else if(route.query.subject == null){
+  } else if (route.query.subject == null) {
     return 'student';
   }
 }
 
-function updateData(){
+function updateData() {
   let id = String(createForm.input01);
   let name = String(createForm.input02);
   let gender = String(createForm.input03);
@@ -162,9 +166,12 @@ function updateData(){
   let classes = String(createForm.input06);
   let admissionYearMonth = String(createForm.input07);
 
-  if (createForm.identity == 'teacher'){
+  if (createForm.identity == '') {
+    window.alert("職業要選!!")
+    return;
+  } else if (createForm.identity == 'teacher') {
     axios
-        .put('http://localhost:8081/update/'+id,
+        .put('http://localhost:8081/update/' + id,
             {
               "id": id,
               "name": name,
@@ -176,12 +183,14 @@ function updateData(){
             }
         )
         .then(function (response) {
-          console.log(response.data);
+          window.alert(response.data);
+          if (response.data === "更新成功"){
+            router.push("/");
+          }
         })
-
-  }else if(createForm.identity == 'student'){
+  } else if (createForm.identity == 'student') {
     axios
-        .put('http://localhost:8081/update/'+id,
+        .put('http://localhost:8081/update/' + id,
             {
               "id": id,
               "name": name,
@@ -193,7 +202,10 @@ function updateData(){
             }
         )
         .then(function (response) {
-          console.log(response.data);
+          window.alert(response.data);
+          if (response.data === "更新成功"){
+            router.push("/");
+          }
         })
   }
 
@@ -205,7 +217,7 @@ h3 {
   margin: 40px 0 0;
 }
 
-nav > a{
+nav > a {
   margin: 0 10px;
 }
 
