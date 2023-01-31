@@ -229,14 +229,14 @@ function deleteData(id) {
 
   if (confirm('確定要刪除嗎?') == true) {
     axios
-        .delete('http://localhost:8081/delete/'+id)
+        .delete('http://localhost:8081/delete/' + id)
         .then(function (response) {
           window.alert(response.data);
         })
   } else {
     return;
   }
-  router.go(0)
+  router.go(0);
 }
 
 function cleanData() {
@@ -252,7 +252,7 @@ h3 {
   margin: 40px 0 0;
 }
 
-nav > a{
+nav > a {
   margin: 0 10px;
 }
 
