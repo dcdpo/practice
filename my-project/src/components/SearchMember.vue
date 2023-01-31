@@ -233,10 +233,8 @@ function deleteData(id) {
         .then(function (response) {
           window.alert(response.data);
         })
-  } else {
-    return;
+    router.go(0);
   }
-  router.go(0);
 }
 
 function cleanData() {

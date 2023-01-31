@@ -5,45 +5,45 @@
     <RouterLink to="/CreateMember">新增功能</RouterLink>
   </nav>
   <div class="input-item">
-    <label class="form-label" for="input01">
+    <label class="form-label" for="id">
       <span style="color: red">*</span>
       學號
     </label>
     <input
-        id="input01"
+        id="id"
         class="form-control"
         type="text"
         name="text"
         required
-        v-model="createForm.input01"
+        v-model="createForm.id"
         disabled
     />
     <br>
-    <label class="form-label" for="input02">
+    <label class="form-label" for="name">
       姓名
     </label>
     <input
-        id="input02"
+        id="name"
         class="form-control"
         type="text"
         name="text"
         required
-        v-model="createForm.input02"
+        v-model="createForm.name"
     />
     <br>
-    <label class="form-label" for="input03">
+    <label class="form-label" for="gender">
       性別
     </label>
     <input
-        id="input03"
+        id="gender"
         class="form-control"
         type="text"
         name="text"
         required
-        v-model="createForm.input03"
+        v-model="createForm.gender"
     />
     <br>
-    <label class="form-label" for="input01">
+    <label class="form-label" for="id">
       職業
     </label>
     <select
@@ -62,56 +62,56 @@
       </option>
     </select>
     <br>
-    <label class="form-label" for="input04" v-show="createForm.identity == 'teacher'">
+    <label class="form-label" for="subject" v-show="createForm.identity == 'teacher'">
       科目
     </label>
     <input
-        id="input04"
+        id="subject"
         class="form-control"
         type="text"
         name="text"
         required
         v-show="createForm.identity == 'teacher'"
-        v-model="createForm.input04"
+        v-model="createForm.subject"
     />
     <br v-show="createForm.identity == 'teacher'">
-    <label class="form-label" for="input05" v-show="createForm.identity == 'teacher'">
+    <label class="form-label" for="jobTitle" v-show="createForm.identity == 'teacher'">
       職位
     </label>
     <input
-        id="input05"
+        id="jobTitle"
         class="form-control"
         type="text"
         name="text"
         required
         v-show="createForm.identity == 'teacher'"
-        v-model="createForm.input05"
+        v-model="createForm.jobTitle"
     />
     <br v-show="createForm.identity == 'teacher'">
-    <label class="form-label" for="input06" v-if="createForm.identity == 'student'">
+    <label class="form-label" for="classes" v-if="createForm.identity == 'student'">
       班級
     </label>
     <input
-        id="input06"
+        id="classes"
         class="form-control"
         type="text"
         name="text"
         required
         v-show="createForm.identity == 'student'"
-        v-model="createForm.input06"
+        v-model="createForm.classes"
     />
     <br v-show="createForm.identity == 'student'">
-    <label class="form-label" for="input07" v-show="createForm.identity == 'student'">
+    <label class="form-label" for="admissionYearMonth" v-show="createForm.identity == 'student'">
       入學年度
     </label>
     <input
-        id="input07"
+        id="admissionYearMonth"
         class="form-control"
         type="text"
         name="text"
         required
         v-show="createForm.identity == 'student'"
-        v-model="createForm.input07"
+        v-model="createForm.admissionYearMonth"
     />
   </div>
   <br>
@@ -140,13 +140,13 @@ const router = useRouter();
 
 const createForm = reactive({
   identity: genre(),
-  input01: route.query.id,
-  input02: route.query.name,
-  input03: route.query.gender,
-  input04: route.query.subject,
-  input05: route.query.jobTitle,
-  input06: route.query.classes,
-  input07: route.query.admissionYearMonth,
+  id: route.query.id,
+  name: route.query.name,
+  gender: route.query.gender,
+  subject: route.query.subject,
+  jobTitle: route.query.jobTitle,
+  classes: route.query.classes,
+  admissionYearMonth: route.query.admissionYearMonth,
 })
 
 function genre() {
@@ -158,13 +158,13 @@ function genre() {
 }
 
 function updateData() {
-  let id = String(createForm.input01);
-  let name = String(createForm.input02);
-  let gender = String(createForm.input03);
-  let subject = String(createForm.input04);
-  let jobTitle = String(createForm.input05);
-  let classes = String(createForm.input06);
-  let admissionYearMonth = String(createForm.input07);
+  let id = String(createForm.id);
+  let name = String(createForm.name);
+  let gender = String(createForm.gender);
+  let subject = String(createForm.subject);
+  let jobTitle = String(createForm.jobTitle);
+  let classes = String(createForm.classes);
+  let admissionYearMonth = String(createForm.admissionYearMonth);
 
   if (createForm.identity == '') {
     window.alert("職業要選!!")
@@ -184,7 +184,7 @@ function updateData() {
         )
         .then(function (response) {
           window.alert(response.data);
-          if (response.data === "更新成功"){
+          if (response.data === "更新成功") {
             router.push("/");
           }
         })
@@ -203,7 +203,7 @@ function updateData() {
         )
         .then(function (response) {
           window.alert(response.data);
-          if (response.data === "更新成功"){
+          if (response.data === "更新成功") {
             router.push("/");
           }
         })

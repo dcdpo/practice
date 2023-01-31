@@ -122,12 +122,12 @@
     清除
   </button>
   <button
-    type="button"
-    class="btn btn-primary"
-    @click="createData"
+      type="button"
+      class="btn btn-primary"
+      @click="createData"
   >
-      儲存
-    </button>
+    儲存
+  </button>
 </template>
 
 <script setup>
@@ -150,45 +150,42 @@ const createForm = reactive({
   input07: '',
 })
 
-function createData(){
-    let id = String(createForm.input01);
-    let name = String(createForm.input02);
-    let gender = String(createForm.input03);
-    let subject = String(createForm.input04);
-    let jobTitle = String(createForm.input05);
-    let classes = String(createForm.input06);
-    let admissionYearMonth = String(createForm.input07);
+function createData() {
+  let id = String(createForm.input01);
+  let name = String(createForm.input02);
+  let gender = String(createForm.input03);
+  let subject = String(createForm.input04);
+  let jobTitle = String(createForm.input05);
+  let classes = String(createForm.input06);
+  let admissionYearMonth = String(createForm.input07);
 
-    if(createForm.input01 == ''){
-      window.alert("id要填!!")
-      return;
-    } else if (createForm.identity == ''){
-      window.alert("職業要選!!")
-      return;
-    }
-    else if(id !== null && createForm.identity !== null) {
-        axios
-            .post('http://localhost:8081/create',
-                {
-                  "id": id,
-                  "name": name,
-                  "gender": gender,
-                  "subject": subject,
-                  "jobTitle": jobTitle,
-                  "classes": classes,
-                  "admissionYearMonth": admissionYearMonth
-                }
-                )
-            .then(function (response) {
-              window.alert(response.data);
-              if (response.data === "新增成功"){
-               router.push("/");
-                }
-            })
-    }else {
-      window.alert(response.data);
-    }
+  if (createForm.input01 == '') {
+    window.alert("id要填!!")
+    return;
+  } else if (createForm.identity == '') {
+    window.alert("職業要選!!")
+    return;
+  } else if (id !== null && createForm.identity !== null) {
+    axios
+        .post('http://localhost:8081/create',
+            {
+              "id": id,
+              "name": name,
+              "gender": gender,
+              "subject": subject,
+              "jobTitle": jobTitle,
+              "classes": classes,
+              "admissionYearMonth": admissionYearMonth
+            }
+        )
+        .then(function (response) {
+          window.alert(response.data);
+          if (response.data === "新增成功") {
+            router.push("/");
+          }
+        })
   }
+}
 
 function cleanData() {
   createForm.genre = '';
@@ -209,7 +206,7 @@ h3 {
   margin: 40px 0 0;
 }
 
-nav > a{
+nav > a {
   margin: 0 10px;
 }
 
