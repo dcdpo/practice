@@ -121,19 +121,22 @@
       回上一頁
     </button>
   </RouterLink>
-  <RouterLink :to="{name: 'SearchMember'}">
-    <button @click="updateData">
-      儲存
-    </button>
-  </RouterLink>
+  <button
+      type="button"
+      class="btn btn-primary"
+      @click="updateData"
+  >
+    儲存
+  </button>
 </template>
 
 <script setup>
 import {reactive} from "vue";
-import {useRoute} from "vue-router"
+import {useRoute, useRouter} from "vue-router"
 import axios from "axios";
 
 const route = useRoute();
+const router = useRouter();
 
 const createForm = reactive({
   identity: genre(),
@@ -142,7 +145,7 @@ const createForm = reactive({
   input03: route.query.gender,
   input04: route.query.subject,
   input05: route.query.jobTitle,
-  input06: route.query.class,
+  input06: route.query.classes,
   input07: route.query.admissionYearMonth,
 })
 
@@ -163,10 +166,7 @@ function updateData() {
   let classes = String(createForm.input06);
   let admissionYearMonth = String(createForm.input07);
 
-  if (createForm.input01 == '') {
-    window.alert("id要填!!")
-    return;
-  } else if (createForm.identity == '') {
+  if (createForm.identity == '') {
     window.alert("職業要選!!")
     return;
   } else if (createForm.identity == 'teacher') {
@@ -184,6 +184,9 @@ function updateData() {
         )
         .then(function (response) {
           window.alert(response.data);
+          if (response.data === "更新成功"){
+            router.push("/");
+          }
         })
   } else if (createForm.identity == 'student') {
     axios
@@ -200,6 +203,9 @@ function updateData() {
         )
         .then(function (response) {
           window.alert(response.data);
+          if (response.data === "更新成功"){
+            router.push("/");
+          }
         })
   }
 

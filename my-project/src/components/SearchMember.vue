@@ -102,14 +102,14 @@
         <td v-else>
           {{ member.jobTitle }}
         </td>
-        <td v-if="member.class == null">
+        <td v-if="member.classes == null">
           無
         </td>
-        <td v-else-if="member.class == ''">
+        <td v-else-if="member.classes == ''">
           無
         </td>
         <td v-else>
-          {{ member.class }}
+          {{ member.classes }}
         </td>
         <td v-if="member.admissionYearMonth == null">
           無
@@ -130,7 +130,7 @@
         <RouterLink :to="{name: 'UpdateMember',
                           query: {id: member.id, name: member.name,
                                   gender: member.gender, subject: member.subject,
-                                  jobTitle: member.jobTitle, class: member.class,
+                                  jobTitle: member.jobTitle, classes: member.classes,
                                   admissionYearMonth: member.admissionYearMonth}}"
                     custom v-slot="{ navigate }">
           <button @click="navigate" role="link">
