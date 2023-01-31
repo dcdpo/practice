@@ -83,7 +83,7 @@ public class MemberService {
     }
 
     public void deleteMemberById(String id) {
-        memberRepository.findById(String.valueOf(id)).ifPresentOrElse((member) -> {
+        memberRepository.findById(id).ifPresentOrElse((member) -> {
             memberRepository.delete(member);
         }, () -> {
             throw new EntityNotFoundException();
