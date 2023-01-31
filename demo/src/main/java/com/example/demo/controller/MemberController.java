@@ -130,7 +130,6 @@ public class MemberController {
     @DeleteMapping("/delete/{id}")
     @CrossOrigin
     public ResponseEntity<?> deleteMember(@PathVariable String id) {
-
         try {
             memberService.deleteMemberById(id);
         } catch (EntityNotFoundException e) {
